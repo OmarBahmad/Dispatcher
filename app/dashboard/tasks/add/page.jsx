@@ -6,7 +6,7 @@ const AddTaskPage = () => {
       <form action="" className={styles.form}>
         <input type="text" placeholder="Title" name="title" required />
         <select name="cat" id="cat">
-          <option value="general"> Choose a Category</option>
+          <option value="general" defaultValue> Choose a Category</option>
           <option value="option 1"> Option 1</option>
           <option value="option 2"> Option 2</option>
           <option value="option 3"> Option 3</option>
@@ -14,11 +14,11 @@ const AddTaskPage = () => {
         <input
           type="number"
           placeholder="Driver Licence"
-          name="Driver Licence"
+          name="driverlicence"
         />
-        <input type="number" placeholder="License Plate" name="License Plate" />
-        <input type="text" placeholder="Driver Name" name="Driver Name" />
-        <input type="text" placeholder="Car" name="Car" />
+        <input type="text" placeholder="License Plate" name="licenseplate" />
+        <input type="text" placeholder="Driver Name" name="drivername" />
+        <input type="text" placeholder="Car" name="car" />
         <textarea
           name="desc"
           id="desc"
