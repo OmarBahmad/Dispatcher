@@ -1,9 +1,10 @@
+import { addTask } from "@/app/lib/actions";
 import styles from "@/app/ui/dashboard/tasks/addTask/addTask.module.css";
 
 const AddTaskPage = () => {
   return (
     <div className={styles.container}>
-      <form action="" className={styles.form}>
+      <form action={addTask} className={styles.form}>
         <input type="text" placeholder="Title" name="title" required />
         <select name="cat" id="cat">
           <option value="general" defaultValue> Choose a Category</option>

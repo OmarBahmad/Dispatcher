@@ -1,7 +1,7 @@
 import { Client, Task, User } from "./models";
 import { connecToDB } from "./utils";
 
-const ITEMS_PER_PAGE = 3
+const ITEMS_PER_PAGE = 10
 
 export const fetchUsers = async (q, page) => {
   const regex = new RegExp(q, "i");

@@ -12,6 +12,9 @@ const TasksPage = async () => {
   const page = searchParams?.page || 1;
   const { count, tasks } = await fetchTasks(q, page);
 
+  console.log("teste", tasks);
+
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>

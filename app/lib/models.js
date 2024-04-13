@@ -5,14 +5,12 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
       min: 3,
       max: 20,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -31,35 +29,19 @@ const userSchema = new mongoose.Schema(
 
 const taskSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    desc: {
-      type: String,
-      required: true,
-    },
-    drivername: {
-      type: String,
-      required: true,
-    },
+    title: String,
+    desc: String,
+    drivername: String,
     car: {
       type: String,
-      required: true,
     },
     licenseplate: {
       type: String,
-      required: true,
     },
-    cat: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    cat: String,
+
     driverlicence: {
       type: Number,
-      required: true,
     },
   },
   { timestamps: true }
@@ -79,34 +61,39 @@ const carSchema = new mongoose.Schema({
   marketValue: Number, // Valor Venal (será preenchido com a API)
   plateExpiration: Date,
   insuranceValue: Number, // VALOR DO SEGURO
-  coverageType: String // TIPO DE COBERTURA
+  coverageType: String, // TIPO DE COBERTURA
 });
 
 const insuranceSchema = new mongoose.Schema({
   agent: String,
   company: String,
+  contact: Number,
   policyNumber: String,
-  coverageType: String, // Tipo de cobertura/Carro (ex: Carro 1 - Partial)
+  insurancecoverageType: String, // Tipo de cobertura/Carro (ex: Carro 1 - Partial)
   monthlyDueDate: Date, // Data Vencimento mensalidade
-  monthlyAmount: Number // Valor Mensalidade por carro
+  monthlyAmount: Number, // Valor Mensalidade por carro
 });
 
-const clientSchema = new mongoose.Schema({
-  budget: Number, // Orçamento
-  name: String, // Nome,
-  email: String, //Email
-  address: String, // Endereço
-  paymentMethod: String, // Forma de Pagamento
-  phone: String, // Telefone
-  note: String, // Observação(Outros)
-  insuranceData: [insuranceSchema], // Dados do Seguro
-  cars: [carSchema] // Dados do carro(Cada carro)
-}, { timestamps: true });
+const clientSchema = new mongoose.Schema(
+  {
+    budget: Number, // Orçamento
+    name: String, // Nome,
+    email: String, //Email
+    clientImg:String, // Imagem do Cliente
+    address: String, // Endereço
+    paymentMethod: String, // Forma de Pagamento
+    phone: String, // Telefone
+    note: String, // Observação(Outros)
+    insuranceData: [insuranceSchema], // Dados do Seguro
+    cars: [carSchema], // Dados do carro(Cada carro)
+  },
+  { timestamps: true }
+);
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 export const Task = mongoose.models.Task || mongoose.model("Task", taskSchema);
-export const Client = mongoose.models.Client ||mongoose.model('Client', clientSchema);
-
+export const Client =
+  mongoose.models.Client || mongoose.model("Client", clientSchema);
 
 // // Exemplo de como adicionar um novo cliente
 // const newClient = new Client({
