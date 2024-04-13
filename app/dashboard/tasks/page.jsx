@@ -2,10 +2,16 @@ import Search from "@/app/ui/dashboard/search/search";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
+import { searchParams } from "next/navigation";
+import { fetchTasks } from "@/app/lib/data";
 
 import styles from "@/app/ui/dashboard/tasks/tasks.module.css";
 
-const TasksPage = () => {
+const TasksPage = async () => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+  const { count, tasks } = await fetchTasks(q, page);
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -27,40 +33,37 @@ const TasksPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className={styles.task}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.taskImage}
-                />
-                Saleh Bahmad
-              </div>
-            </td>
-            <td>Assurance</td>
-            <td className={styles.description}>New assurance account</td>
-            <td>05.01.2024</td>
-            <td>admin</td>
-            <td>active</td>
-            <td>
-              <div className={styles.buttons}>
-                <Link href="/dashboard/tasks/test">
-                  <button className={`${styles.button} ${styles.view}`}>
-                    View
-                  </button>
-                </Link>
-                <button className={`${styles.button} ${styles.delete}`}>
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
+          {tasks.map((task) => {
+            return (
+              <tr key={task.id}>
+                <td>
+                  <div className={styles.task}>
+                    {task.title}
+                  </div>
+                </td>
+                <td>Assurance</td>
+                <td className={styles.description}>New assurance account</td>
+                <td>05.01.2024</td>
+                <td>admin</td>
+                <td>active</td>
+                <td>
+                  <div className={styles.buttons}>
+                    <Link href="/dashboard/tasks/test">
+                      <button className={`${styles.button} ${styles.view}`}>
+                        View
+                      </button>
+                    </Link>
+                    <button className={`${styles.button} ${styles.delete}`}>
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-      <Pagination />
+      <Pagination count={count}/>
     </div>
   );
 };

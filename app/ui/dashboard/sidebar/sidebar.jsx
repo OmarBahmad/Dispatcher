@@ -12,6 +12,7 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
+  MdGroups,
 } from "react-icons/md";
 
 const menuItems = [
@@ -32,6 +33,11 @@ const menuItems = [
         title: "Tasks",
         path: "/dashboard/tasks",
         icon: <MdShoppingBag />,
+      },
+      {
+        title: "Clients",
+        path: "/dashboard/clients",
+        icon: <MdGroups />,
       },
       {
         title: "Transactions",
