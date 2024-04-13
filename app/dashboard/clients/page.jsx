@@ -1,20 +1,22 @@
-import { fetchUsers } from "@/app/lib/data";
+import { fetchClients } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
-import styles from "@/app/ui/dashboard/users/users.module.css";
+import styles from "@/app/ui/dashboard/clients/clients.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const UsersPage = async ({ searchParams }) => {
+const ClientsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  const {count, users} = await fetchUsers(q, page);
+  const { count, clients } = await fetchClients(q, page);
+
+  console.log("teste", clients);
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for the user..." />
-        <Link href="/dashboard/users/add">
+        <Link href="/dashboard/clients/add">
           <button className={styles.addButton}>Add new</button>
         </Link>
       </div>
@@ -24,32 +26,25 @@ const UsersPage = async ({ searchParams }) => {
             <td>Name</td>
             <td>Email</td>
             <td>Created At</td>
-            <td>Role</td>
+            <td>Phone</td>
+            <td>Type</td>
             <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => {
+          {clients?.map((client) => {
             return (
-              <tr key={user.id}>
+              <tr key={client.id}>
                 <td>
-                  <div className={styles.user}>
-                    <Image
-                      src={user.img || "/noavatar.png"}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className={styles.userImage}
-                    />
-                    {user.username}
-                  </div>
+                  <div className={styles.user}>{client.name}</div>
                 </td>
-                <td>{user.email}</td>
-                <td>{user.createdAt?.toString().slice(4, 16)}</td>
-                <td>{user.isAdmin ? "Admin" : "NoAdmin"}</td>
+                <td>{client.email}</td>
+                <td>{client.createdAt?.toString().slice(4, 16)}</td>
+                <td>{client.phone}</td>
+                <td>{client.insuranceData[0]?.company}</td>
                 <td>
                   <div className={styles.buttons}>
-                    <Link href={`/dashboard/users/${user.id}`}>
+                    <Link href={`/dashboard/clients/${client.id}`}>
                       <button className={`${styles.button} ${styles.view}`}>
                         View
                       </button>
@@ -69,4 +64,4 @@ const UsersPage = async ({ searchParams }) => {
   );
 };
 
-export default UsersPage;
+export default ClientsPage;
