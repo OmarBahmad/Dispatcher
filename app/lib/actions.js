@@ -5,6 +5,7 @@ import { Client, Task, User } from "./models";
 import { connecToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { signIn } from "../auth";
 
 export const addUser = async (formData) => {
   const { username, email, password, isAdmin } = Object.fromEntries(formData);
@@ -23,8 +24,34 @@ export const addUser = async (formData) => {
 
     await newUser.save();
   } catch (err) {
-    console.log("erro na criação do usuário", err);
     throw new Error("Failed to create user!");
+  }
+
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
+};
+
+export const updateUser = async (formData) => {
+  const { id, username, email, password, isAdmin } =
+    Object.fromEntries(formData);
+
+  try {
+    connecToDB();
+    const updateFields = {
+      username,
+      email,
+      password,
+      isAdmin,
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        updateFields[key] === "" || (undefined && delete updateFields[key])
+    );
+
+    await User.findByIdAndUpdate(id, updateFields)
+  } catch (err) {
+    throw new Error("Failed to update user!");
   }
 
   revalidatePath("/dashboard/users");
@@ -100,7 +127,7 @@ export const addClient = async (formData) => {
       insurancecoverageType: insurancecoverageType,
       monthlyDueDate: monthlyDueDate,
       monthlyAmount: monthlyAmount,
-    }
+    },
   ];
 
   const cars = [
@@ -119,7 +146,7 @@ export const addClient = async (formData) => {
       plateExpiration: plateExpiration,
       insuranceValue: insuranceValue,
       coverageType: coverageType,
-    }
+    },
   ];
 
   try {
@@ -135,7 +162,7 @@ export const addClient = async (formData) => {
       phone,
       note,
       insuranceData,
-      cars
+      cars,
     });
 
     await newUser.save();
@@ -148,22 +175,59 @@ export const addClient = async (formData) => {
   redirect("/dashboard/clients");
 };
 
-
 export const deleteUser = async (formData) => {
-  console.log('teste formData', formData)
-  const id = Object.fromEntries(formData);
-
-  console.log('teste id', id.id)
-
+  const data = Object.fromEntries(formData);
 
   try {
     connecToDB();
 
-    await User.findByIdAndDelete(id.id)
+    await User.findByIdAndDelete(data.id);
   } catch (err) {
     console.log("erro no delete do usuário", err);
     throw new Error("Failed to delete user!");
   }
 
   revalidatePath("/dashboard/users");
+};
+
+export const deleteTask = async (formData) => {
+  const data = Object.fromEntries(formData);
+
+  try {
+    connecToDB();
+
+    await Task.findByIdAndDelete(data.id);
+  } catch (err) {
+    console.log("erro no delete da task", err);
+    throw new Error("Failed to delete task!");
+  }
+
+  revalidatePath("/dashboard/tasks");
+};
+
+export const deleteClient = async (formData) => {
+  const data = Object.fromEntries(formData);
+
+  try {
+    connecToDB();
+
+    await Client.findByIdAndDelete(data.id);
+  } catch (err) {
+    console.log("erro no delete do cliente", err);
+    throw new Error("Failed to delete client!");
+  }
+
+  revalidatePath("/dashboard/clients");
+};
+
+export const authenticate = async (prevState, formData) => {
+  const { username, password } = Object.fromEntries(formData);
+  try {
+    await signIn("credentials", { username, password });
+  } catch (err) {
+    if (err.message.includes("CredentialsSignin")) {
+      return "Wrong Credentials";
+    }
+    throw err;
+  }
 };

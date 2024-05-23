@@ -6,14 +6,13 @@ import { searchParams } from "next/navigation";
 import { fetchTasks } from "@/app/lib/data";
 
 import styles from "@/app/ui/dashboard/tasks/tasks.module.css";
+import { deleteTask } from "@/app/lib/actions";
+import DeleteButtonWithModal from "@/app/ui/dashboard/components/DeleteButton/deletebutton";
 
 const TasksPage = async () => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
   const { count, tasks } = await fetchTasks(q, page);
-
-  console.log("teste", tasks);
-
 
   return (
     <div className={styles.container}>
@@ -56,9 +55,9 @@ const TasksPage = async () => {
                         View
                       </button>
                     </Link>
-                    <button className={`${styles.button} ${styles.delete}`}>
-                      Delete
-                    </button>
+                    <form action={deleteTask}>
+                      <DeleteButtonWithModal id={task.id} text={'task'}/>
+                    </form>
                   </div>
                 </td>
               </tr>

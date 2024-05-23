@@ -10,7 +10,7 @@ const AddUserPage = () => {
         <input type="password" placeholder="Password" name="password" required />
 
         <select name="isAdmin" id="isAdmin">
-          <option value="true" selected>Yes</option>
+          <option value="true" defaultValue>Yes</option>
           <option value="false">No</option>
         </select>
 

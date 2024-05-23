@@ -4,13 +4,13 @@ import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/clients/clients.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { deleteClient } from "@/app/lib/actions";
+import DeleteButtonWithModal from "@/app/ui/dashboard/components/DeleteButton/deletebutton";
 
 const ClientsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
   const { count, clients } = await fetchClients(q, page);
-
-  console.log("teste", clients);
 
   return (
     <div className={styles.container}>
@@ -49,9 +49,9 @@ const ClientsPage = async ({ searchParams }) => {
                         View
                       </button>
                     </Link>
-                    <button className={`${styles.button} ${styles.delete}`}>
-                      Delete
-                    </button>
+                    <form action={deleteClient}>
+                      <DeleteButtonWithModal id={client.id} text={'client'}/>
+                    </form>
                   </div>
                 </td>
               </tr>
