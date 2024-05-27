@@ -3,14 +3,16 @@ import dotenv from 'dotenv';
 
 export const connecToDB = async () => {
   const connection = {};
-  dotenv.config();
+  const dotenv = require("dotenv");
+  dotenv.config({ path: "./config.env" });
+
+  const DB = process.env.DATABASE;
 
   try {
     if (connection.isConnected) return;
-    const db = await mongoose.connect(process.env.MONGO, {
+    const db = await mongoose.connect(DB, {
       useUnifiedTopology:true,
-      useNewUrlParser: true,
-      useCreateIndex: true
+      useNewUrlParser: true
     });
     connection.isConnected = db.connections[0].readyState;
   } catch (error) {
