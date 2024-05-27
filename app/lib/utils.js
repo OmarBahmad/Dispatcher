@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 
 export const connecToDB = async () => {
   const connection = {};
+  dotenv.config();
 
   try {
     if (connection.isConnected) return;
