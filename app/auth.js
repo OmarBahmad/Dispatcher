@@ -8,7 +8,6 @@ import bcrypt from "bcrypt";
 const login = async (credentials) => {
   try {
     connecToDB;
-    console.log('credentials',credentials)
     const user = await User.findOne({ username: credentials.username });
     console.log('user',user)
 
