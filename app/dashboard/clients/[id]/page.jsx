@@ -1,3 +1,4 @@
+"use client"
 import { updateClient } from "@/app/lib/actions";
 import { fetchSingleClient } from "@/app/lib/data";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
