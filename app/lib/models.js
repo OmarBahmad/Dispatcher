@@ -90,8 +90,7 @@ const clientSchema = new mongoose.Schema(
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 export const Task = mongoose.models.Task || mongoose.model("Task", taskSchema);
-export const Client =
-  mongoose.models.Client || mongoose.model("Client", clientSchema);
+export const Client = mongoose.models.Client || mongoose.model("Client", clientSchema);
 
 // // Exemplo de como adicionar um novo cliente
 // const newClient = new Client({

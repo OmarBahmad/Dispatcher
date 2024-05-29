@@ -127,62 +127,15 @@ export const addClient = async (formData) => {
     paymentMethod,
     phone,
     note,
-    agent,
-    company,
-    contact,
-    policyNumber,
-    insurancecoverageType,
-    monthlyDueDate,
-    monthlyAmount,
-    year,
-    model,
-    trim,
-    chassis,
-    miles,
-    color,
-    type,
-    weight,
-    plateType,
-    plateNumber,
-    marketValue,
-    plateExpiration,
-    insuranceValue,
-    coverageType,
+    insuranceData,
+    cars,
   } = Object.fromEntries(formData);
 
-  const insuranceData = [
-    {
-      agent: agent,
-      company: company,
-      contact: contact,
-      policyNumber: policyNumber,
-      insurancecoverageType: insurancecoverageType,
-      monthlyDueDate: monthlyDueDate,
-      monthlyAmount: monthlyAmount,
-    },
-  ];
-
-  const cars = [
-    {
-      year: year,
-      model: model,
-      trim: trim,
-      chassis: chassis,
-      miles: miles,
-      color: color,
-      type: type,
-      weight: weight,
-      plateType: plateType,
-      plateNumber: plateNumber,
-      marketValue: marketValue,
-      plateExpiration: plateExpiration,
-      insuranceValue: insuranceValue,
-      coverageType: coverageType,
-    },
-  ];
+  const parsedInsuranceData = JSON.parse(insuranceData);
+  const parsedCars = JSON.parse(cars);
 
   try {
-    connectToDB();
+    await connectToDB();
 
     const newUser = new Client({
       name,
@@ -193,33 +146,18 @@ export const addClient = async (formData) => {
       paymentMethod,
       phone,
       note,
-      insuranceData,
-      cars,
+      insuranceData: parsedInsuranceData,
+      cars: parsedCars,
     });
 
     await newUser.save();
   } catch (err) {
-    console.log("erro na criação do cliente", err);
+    console.log("Erro na criação do cliente", err);
     throw new Error("Failed to create client!");
   }
 
   revalidatePath("/dashboard/clients");
   redirect("/dashboard/clients");
-};
-
-export const deleteUser = async (formData) => {
-  const data = Object.fromEntries(formData);
-
-  try {
-    connectToDB();
-
-    await User.findByIdAndDelete(data.id);
-  } catch (err) {
-    console.log("erro no delete do usuário", err);
-    throw new Error("Failed to delete user!");
-  }
-
-  revalidatePath("/dashboard/users");
 };
 
 export const updateClient = async (formData) => {
@@ -265,6 +203,21 @@ export const updateClient = async (formData) => {
 
   revalidatePath("/dashboard/clients");
   redirect("/dashboard/clients");
+};
+
+export const deleteUser = async (formData) => {
+  const data = Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    await User.findByIdAndDelete(data.id);
+  } catch (err) {
+    console.log("erro no delete do usuário", err);
+    throw new Error("Failed to delete user!");
+  }
+
+  revalidatePath("/dashboard/users");
 };
 
 export const deleteTask = async (formData) => {

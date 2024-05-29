@@ -93,9 +93,17 @@ const AddClientPage = () => {
     setCars(updatedCars);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    formData.append("insuranceData", JSON.stringify(insuranceData));
+    formData.append("cars", JSON.stringify(cars));
+    await addClient(formData);
+  };
+
   return (
     <div className={styles.container}>
-      <form action={addClient} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <h3 className={styles.label}>Client</h3>
         {/* Client Data */}
         <div className={styles.inputContainer}>
