@@ -25,11 +25,9 @@ const TasksPage = async () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Name</td>
             <td>Title</td>
             <td>Description</td>
             <td>Created At</td>
-            <td>Created By</td>
             <td>Status</td>
             <td>Action</td>
           </tr>
@@ -38,19 +36,13 @@ const TasksPage = async () => {
           {tasks.map((task) => {
             return (
               <tr key={task.id}>
-                <td>
-                  <div className={styles.task}>
-                    {task.title}
-                  </div>
-                </td>
-                <td>Assurance</td>
-                <td className={styles.description}>New assurance account</td>
-                <td>05.01.2024</td>
-                <td>admin</td>
-                <td>active</td>
+                <td>{task.title}</td>
+                <td className={styles.description}>{task.desc}</td>
+                <td>{task.createdAt?.toString().slice(4, 16)}</td>
+                <td>{task.cat}</td>
                 <td>
                   <div className={styles.buttons}>
-                    <Link href="/dashboard/tasks/test">
+                    <Link href={`/dashboard/tasks/${task.id}`}>
                       <button className={`${styles.button} ${styles.view}`}>
                         View
                       </button>

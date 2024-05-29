@@ -85,6 +85,38 @@ export const addTask = async (formData) => {
   redirect("/dashboard/tasks");
 };
 
+export const updateTask = async (formData) => {
+  const { id, title, cat, driverlicence, licenseplate, drivername, car, desc } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    const updateFields = {
+      title,
+      cat,
+      driverlicence,
+      licenseplate,
+      drivername,
+      car,
+      desc,
+    };
+
+    // Remove campos vazios ou indefinidos
+    Object.keys(updateFields).forEach(
+      (key) =>
+        updateFields[key] === "" || (undefined && delete updateFields[key])
+    );
+
+    await Task.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    throw new Error("Failed to update task!");
+  }
+
+  revalidatePath("/dashboard/tasks");
+  redirect("/dashboard/tasks");
+};
+
 export const addClient = async (formData) => {
   const {
     name,

@@ -8,9 +8,9 @@ const AddTaskPage = () => {
         <input type="text" placeholder="Title" name="title" required />
         <select name="cat" id="cat">
           <option value="general" defaultValue> Choose a Category</option>
-          <option value="option 1"> Option 1</option>
-          <option value="option 2"> Option 2</option>
-          <option value="option 3"> Option 3</option>
+          <option value="open"> Open</option>
+          <option value="close"> Close</option>
+          <option value="standby"> StandBy</option>
         </select>
         <input
           type="number"
