@@ -7,51 +7,73 @@
 
 .form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.inputContainer label {
+  margin-bottom: 5px;
+}
+
+.inputContainer input,
+.inputContainer select,
+.inputContainer textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-.form input, .form textarea, .form select{
-padding: 30px;
-background-color: var(--bg);
-color: var(--text);
-border: 2px solid #2e374a;
-border-radius: 5px;
-margin-bottom: 30px;
+.insuranceContainer,
+.carContainer {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-.form input, .form select {
-  width: 45%;
-}
-
-.form select option {
-  background-color: var(--bg);
-}
-
-.form textarea {
-  width: 100%;
-}
-
-.form button {
-  width: 100%;
-  padding: 30px;
-  background-color: teal;
-  color: var(--text);
+.addButton,
+.removeButton,
+.submitButton {
+  background-color: #4caf50;
+  color: white;
   border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.removeButton {
+  background-color: #f44336;
+}
+
+.addButton:hover,
+.removeButton:hover,
+.submitButton:hover {
+  opacity: 0.8;
+}
+
+.form input, .form textarea, .form select{
+  padding: 30px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 2px solid #2e374a;
   border-radius: 5px;
-}
-
-.form input::-webkit-outer-spin-button,
-.form input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.form input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.form .label {
-  width: 100%;
-  margin: 30px 0;
-}
+  margin-bottom: 30px;
+  }

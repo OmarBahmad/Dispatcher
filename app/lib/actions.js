@@ -222,6 +222,51 @@ export const deleteUser = async (formData) => {
   revalidatePath("/dashboard/users");
 };
 
+export const updateClient = async (formData) => {
+  const {
+    id,
+    name,
+    email,
+    clientImg,
+    budget,
+    address,
+    paymentMethod,
+    phone,
+    note,
+    insuranceData,
+    cars,
+  } = Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    const updateFields = {
+      name,
+      email,
+      clientImg,
+      budget,
+      address,
+      paymentMethod,
+      phone,
+      note,
+      insuranceData: JSON.parse(insuranceData),
+      cars: JSON.parse(cars),
+    };
+
+    // Remove campos vazios ou indefinidos
+    Object.keys(updateFields).forEach(
+      (key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+    );
+
+    await Client.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    throw new Error("Failed to update client!");
+  }
+
+  revalidatePath("/dashboard/clients");
+  redirect("/dashboard/clients");
+};
+
 export const deleteTask = async (formData) => {
   const data = Object.fromEntries(formData);
 
