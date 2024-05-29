@@ -6,7 +6,6 @@ import Image from "next/image";
 const SingleUserPage = async ({ params }) => {
   const { id } = params;
   const user = await fetchSingleUser(id);
-  console.log('teste user', user)
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
