@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { Client, Task, User } from "./models";
-import { connecToDB } from "./utils";
+import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { signIn } from "../auth";
@@ -11,7 +11,7 @@ export const addUser = async (formData) => {
   const { username, email, password, isAdmin } = Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -36,7 +36,7 @@ export const updateUser = async (formData) => {
     Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
     const updateFields = {
       username,
       email,
@@ -63,7 +63,7 @@ export const addTask = async (formData) => {
     Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
 
     const newTask = new Task({
       title,
@@ -150,7 +150,7 @@ export const addClient = async (formData) => {
   ];
 
   try {
-    connecToDB();
+    connectToDB();
 
     const newUser = new Client({
       name,
@@ -179,7 +179,7 @@ export const deleteUser = async (formData) => {
   const data = Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
 
     await User.findByIdAndDelete(data.id);
   } catch (err) {
@@ -194,7 +194,7 @@ export const deleteTask = async (formData) => {
   const data = Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
 
     await Task.findByIdAndDelete(data.id);
   } catch (err) {
@@ -209,7 +209,7 @@ export const deleteClient = async (formData) => {
   const data = Object.fromEntries(formData);
 
   try {
-    connecToDB();
+    connectToDB();
 
     await Client.findByIdAndDelete(data.id);
   } catch (err) {
