@@ -1,5 +1,5 @@
 import { Client, Task, User } from "./models";
-import { connecToDB } from "./utils";
+import { connectToDB } from "./utils";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -7,7 +7,7 @@ export const fetchUsers = async (q, page) => {
   const regex = new RegExp(q, "i");
 
   try {
-    connecToDB();
+    connectToDB();
     const count = await User.find({ username: { $regex: regex } }).count();
     const users = await User.find({ username: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
@@ -21,7 +21,7 @@ export const fetchUsers = async (q, page) => {
 
 export const fetchSingleUser = async (id) => {
   try {
-    connecToDB();
+    connectToDB();
     const user = await User.findById(id);
     return user;
   } catch (error) {
@@ -34,7 +34,7 @@ export const fetchTasks = async (q, page) => {
   const regex = new RegExp(q, "i");
 
   try {
-    connecToDB();
+    connectToDB();
     const count = await Task.find({ title: { $regex: regex } }).count();
     const tasks = await Task.find({ title: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
@@ -48,7 +48,7 @@ export const fetchTasks = async (q, page) => {
 
 export const fetchSingleTask = async (id) => {
   try {
-    connecToDB();
+    connectToDB();
     const task = await Task.findById(id);
     return task;
   } catch (error) {
@@ -61,7 +61,7 @@ export const fetchClients = async (q, page) => {
   const regex = new RegExp(q, "i");
 
   try {
-    connecToDB();
+    connectToDB();
     const count = await Client.find({ name: { $regex: regex } }).count();
     const clients = await Client.find({ name: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
@@ -75,7 +75,7 @@ export const fetchClients = async (q, page) => {
 
 export const fetchSingleClient = async (id) => {
   try {
-    connecToDB();
+    connectToDB();
     const client = await Client.findById(id);
     return client;
   } catch (error) {
