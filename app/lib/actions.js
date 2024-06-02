@@ -175,8 +175,11 @@ export const updateClient = async (formData) => {
     cars,
   } = Object.fromEntries(formData);
 
+  const parsedInsuranceData = JSON.parse(insuranceData);
+  const parsedCars = JSON.parse(cars);
+
   try {
-    connectToDB();
+    await connectToDB();
 
     const updateFields = {
       name,
@@ -187,8 +190,8 @@ export const updateClient = async (formData) => {
       paymentMethod,
       phone,
       note,
-      insuranceData: JSON.parse(insuranceData),
-      cars: JSON.parse(cars),
+      insuranceData: parsedInsuranceData,
+      cars: parsedCars,
     };
 
     // Remove campos vazios ou indefinidos
@@ -196,8 +199,9 @@ export const updateClient = async (formData) => {
       (key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
     );
 
-    await Client.findByIdAndUpdate(id, updateFields);
+    await Client.findByIdAndUpdate(id, updateFields, { new: true });
   } catch (err) {
+    console.error("Failed to update client!", err);
     throw new Error("Failed to update client!");
   }
 
