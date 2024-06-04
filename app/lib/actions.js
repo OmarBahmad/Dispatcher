@@ -49,7 +49,7 @@ export const updateUser = async (formData) => {
         updateFields[key] === "" || (undefined && delete updateFields[key])
     );
 
-    await User.findByIdAndUpdate(id, updateFields)
+    await User.findByIdAndUpdate(id, updateFields);
   } catch (err) {
     throw new Error("Failed to update user!");
   }
@@ -59,8 +59,21 @@ export const updateUser = async (formData) => {
 };
 
 export const addTask = async (formData) => {
-  const { title, cat, driverlicence, licenseplate, drivername, car, desc } =
-    Object.fromEntries(formData);
+  const {
+    title,
+    cat,
+    driverlicence,
+    licenseplate,
+    drivername,
+    car,
+    desc,
+    labor,
+    overtime,
+    totalAmount,
+    paidAmount,
+    dueAmount,
+    status
+  } = Object.fromEntries(formData);
 
   try {
     connectToDB();
@@ -70,10 +83,17 @@ export const addTask = async (formData) => {
       cat,
       driverlicence,
       licenseplate,
+      labor,
+      overtime,
+      totalAmount,
+      paidAmount,
+      dueAmount,
+      status,
       drivername,
       car,
-      desc,
+      desc
     });
+    console.log('newTask', newTask)
 
     await newTask.save();
   } catch (err) {
@@ -127,62 +147,15 @@ export const addClient = async (formData) => {
     paymentMethod,
     phone,
     note,
-    agent,
-    company,
-    contact,
-    policyNumber,
-    insurancecoverageType,
-    monthlyDueDate,
-    monthlyAmount,
-    year,
-    model,
-    trim,
-    chassis,
-    miles,
-    color,
-    type,
-    weight,
-    plateType,
-    plateNumber,
-    marketValue,
-    plateExpiration,
-    insuranceValue,
-    coverageType,
+    insuranceData,
+    cars,
   } = Object.fromEntries(formData);
 
-  const insuranceData = [
-    {
-      agent: agent,
-      company: company,
-      contact: contact,
-      policyNumber: policyNumber,
-      insurancecoverageType: insurancecoverageType,
-      monthlyDueDate: monthlyDueDate,
-      monthlyAmount: monthlyAmount,
-    },
-  ];
-
-  const cars = [
-    {
-      year: year,
-      model: model,
-      trim: trim,
-      chassis: chassis,
-      miles: miles,
-      color: color,
-      type: type,
-      weight: weight,
-      plateType: plateType,
-      plateNumber: plateNumber,
-      marketValue: marketValue,
-      plateExpiration: plateExpiration,
-      insuranceValue: insuranceValue,
-      coverageType: coverageType,
-    },
-  ];
+  const parsedInsuranceData = JSON.parse(insuranceData);
+  const parsedCars = JSON.parse(cars);
 
   try {
-    connectToDB();
+    await connectToDB();
 
     const newUser = new Client({
       name,
@@ -193,14 +166,62 @@ export const addClient = async (formData) => {
       paymentMethod,
       phone,
       note,
-      insuranceData,
-      cars,
+      insuranceData: parsedInsuranceData,
+      cars: parsedCars,
     });
 
     await newUser.save();
   } catch (err) {
-    console.log("erro na criação do cliente", err);
+    console.log("Erro na criação do cliente", err);
     throw new Error("Failed to create client!");
+  }
+
+  revalidatePath("/dashboard/clients");
+  redirect("/dashboard/clients");
+};
+
+export const updateClient = async (formData) => {
+  const {
+    id,
+    name,
+    email,
+    clientImg,
+    budget,
+    address,
+    paymentMethod,
+    phone,
+    note,
+    insuranceData,
+    cars,
+  } = Object.fromEntries(formData);
+
+  try {
+    await connectToDB();
+
+    const updateFields = {
+      name,
+      email,
+      clientImg,
+      budget,
+      address,
+      paymentMethod,
+      phone,
+      note,
+      insuranceData,
+      cars,
+    };
+
+    // Remove campos vazios ou indefinidos
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
+
+    await Client.findByIdAndUpdate(id, updateFields, { new: true });
+  } catch (err) {
+    console.error("Failed to update client!", err);
+    throw new Error("Failed to update client!");
   }
 
   revalidatePath("/dashboard/clients");
@@ -220,51 +241,6 @@ export const deleteUser = async (formData) => {
   }
 
   revalidatePath("/dashboard/users");
-};
-
-export const updateClient = async (formData) => {
-  const {
-    id,
-    name,
-    email,
-    clientImg,
-    budget,
-    address,
-    paymentMethod,
-    phone,
-    note,
-    insuranceData,
-    cars,
-  } = Object.fromEntries(formData);
-
-  try {
-    connectToDB();
-
-    const updateFields = {
-      name,
-      email,
-      clientImg,
-      budget,
-      address,
-      paymentMethod,
-      phone,
-      note,
-      insuranceData: JSON.parse(insuranceData),
-      cars: JSON.parse(cars),
-    };
-
-    // Remove campos vazios ou indefinidos
-    Object.keys(updateFields).forEach(
-      (key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
-    );
-
-    await Client.findByIdAndUpdate(id, updateFields);
-  } catch (err) {
-    throw new Error("Failed to update client!");
-  }
-
-  revalidatePath("/dashboard/clients");
-  redirect("/dashboard/clients");
 };
 
 export const deleteTask = async (formData) => {

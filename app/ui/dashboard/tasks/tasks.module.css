@@ -76,3 +76,40 @@
     padding: 0px;
     margin: 10px;
   }
+
+  .status, .cat{
+    text-transform: uppercase;
+
+  }
+
+  .status span, .cat span{
+    padding: 5px 13px;
+    border-radius: 5px;
+    text-align: center ;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .status .unpaid {
+    padding: 5px 15px;
+    background-color: #FF6347;
+  }
+  .status .total {
+    padding: 5px 20px;
+    background-color: #32CD32;
+  }
+  .status .partial {
+    background-color: #FFD700;
+  }
+
+  .cat .open {
+    padding: 5px 18px;
+    background-color: #1E90FF;
+  }
+  .cat .close {
+    padding: 5px 15px;
+    background-color: #808080;
+  }
+  .cat .standby {
+    font-size: 12px;
+    background-color: #FFA500;
+  }
