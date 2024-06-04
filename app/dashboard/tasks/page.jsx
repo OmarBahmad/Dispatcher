@@ -26,6 +26,9 @@ const TasksPage = async () => {
         <thead>
           <tr>
             <td>Title</td>
+            <td>Total amount</td>
+            <td>Due amount</td>
+            <td>Paid Status</td>
             <td>Description</td>
             <td>Created At</td>
             <td>Status</td>
@@ -37,9 +40,23 @@ const TasksPage = async () => {
             return (
               <tr key={task.id}>
                 <td>{task.title}</td>
+                <td>U$ {Number(task.labor) + Number(task.overtime)}</td>
+                <td>
+                  U${" "}
+                  {Number(task.labor) +
+                    Number(task.overtime) -
+                    Number(task.paidAmount)}
+                </td>
+                <td className={`${styles.status}`}>
+                  <span className={`${styles[task.status]}`}>
+                    {task.status}
+                  </span>
+                </td>
                 <td className={styles.description}>{task.desc}</td>
                 <td>{task.createdAt?.toString().slice(4, 16)}</td>
-                <td>{task.cat}</td>
+                <td className={`${styles.cat}`}>
+                  <span className={`${styles[task.cat]}`}>{task.cat}</span>
+                </td>
                 <td>
                   <div className={styles.buttons}>
                     <Link href={`/dashboard/tasks/${task.id}`}>
@@ -48,7 +65,7 @@ const TasksPage = async () => {
                       </button>
                     </Link>
                     <form action={deleteTask}>
-                      <DeleteButtonWithModal id={task.id} text={'task'}/>
+                      <DeleteButtonWithModal id={task.id} text={"task"} />
                     </form>
                   </div>
                 </td>
@@ -57,7 +74,7 @@ const TasksPage = async () => {
           })}
         </tbody>
       </table>
-      <Pagination count={count}/>
+      <Pagination count={count} />
     </div>
   );
 };

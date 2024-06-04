@@ -49,7 +49,7 @@ export const updateUser = async (formData) => {
         updateFields[key] === "" || (undefined && delete updateFields[key])
     );
 
-    await User.findByIdAndUpdate(id, updateFields)
+    await User.findByIdAndUpdate(id, updateFields);
   } catch (err) {
     throw new Error("Failed to update user!");
   }
@@ -59,8 +59,21 @@ export const updateUser = async (formData) => {
 };
 
 export const addTask = async (formData) => {
-  const { title, cat, driverlicence, licenseplate, drivername, car, desc } =
-    Object.fromEntries(formData);
+  const {
+    title,
+    cat,
+    driverlicence,
+    licenseplate,
+    drivername,
+    car,
+    desc,
+    labor,
+    overtime,
+    totalAmount,
+    paidAmount,
+    dueAmount,
+    status
+  } = Object.fromEntries(formData);
 
   try {
     connectToDB();
@@ -70,10 +83,17 @@ export const addTask = async (formData) => {
       cat,
       driverlicence,
       licenseplate,
+      labor,
+      overtime,
+      totalAmount,
+      paidAmount,
+      dueAmount,
+      status,
       drivername,
       car,
-      desc,
+      desc
     });
+    console.log('newTask', newTask)
 
     await newTask.save();
   } catch (err) {
@@ -175,9 +195,6 @@ export const updateClient = async (formData) => {
     cars,
   } = Object.fromEntries(formData);
 
-  const parsedInsuranceData = JSON.parse(insuranceData);
-  const parsedCars = JSON.parse(cars);
-
   try {
     await connectToDB();
 
@@ -190,13 +207,15 @@ export const updateClient = async (formData) => {
       paymentMethod,
       phone,
       note,
-      insuranceData: parsedInsuranceData,
-      cars: parsedCars,
+      insuranceData,
+      cars,
     };
 
     // Remove campos vazios ou indefinidos
     Object.keys(updateFields).forEach(
-      (key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
     );
 
     await Client.findByIdAndUpdate(id, updateFields, { new: true });

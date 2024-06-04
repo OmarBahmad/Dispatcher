@@ -1,6 +1,6 @@
 import { fetchSingleClient } from "@/app/lib/data";
+import SingleClient from "@/app/ui/dashboard/clients/singleClient/singleClient";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
-import SingleClientForm from "@/app/ui/dashboard/clients/singleClient/singleClientForm";
 
 const SingleClientPage = async ({ params }) => {
   const { id } = params;
@@ -13,7 +13,8 @@ const SingleClientPage = async ({ params }) => {
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>{client.name}</div>
-      {client && <SingleClientForm client={client} />}
+      
+      {<SingleClient client={client} />}
     </div>
   );
 };
