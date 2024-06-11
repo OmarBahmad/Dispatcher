@@ -108,16 +108,11 @@ const AddClientPage = () => {
         {/* Client Data */}
         <div className={styles.inputContainer}>
           <label>Name</label>
-          <input type="text" placeholder="Client Name" name="name" required />
+          <input type="text" placeholder="Client Name" name="name" />
         </div>
         <div className={styles.inputContainer}>
           <label>Email</label>
-          <input
-            type="email"
-            placeholder="Client Email"
-            name="email"
-            required
-          />
+          <input type="email" placeholder="Client Email" name="email" />
         </div>
         <div className={styles.inputContainer}>
           <label>Client Image (URL)</label>
@@ -129,11 +124,11 @@ const AddClientPage = () => {
         </div>
         <div className={styles.inputContainer}>
           <label>Budget</label>
-          <input type="number" placeholder="Budget" name="budget" required />
+          <input type="number" placeholder="Budget" name="budget" />
         </div>
         <div className={styles.inputContainer}>
           <label>Address</label>
-          <input type="text" placeholder="Address" name="address" required />
+          <input type="text" placeholder="Address" name="address" />
         </div>
         <div className={styles.inputContainer}>
           <label>Payment Method</label>
@@ -141,12 +136,11 @@ const AddClientPage = () => {
             type="text"
             placeholder="Payment Method"
             name="paymentMethod"
-            required
           />
         </div>
         <div className={styles.inputContainer}>
           <label>Phone</label>
-          <input type="text" placeholder="Phone" name="phone" required />
+          <input type="text" placeholder="Phone" name="phone" />
         </div>
         <div className={styles.inputContainer}>
           <label>Note</label>
@@ -184,7 +178,6 @@ const AddClientPage = () => {
                 onChange={(e) =>
                   handleInsuranceChange(index, "company", e.target.value)
                 }
-                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -270,7 +263,6 @@ const AddClientPage = () => {
                 placeholder="Year"
                 value={car.year}
                 onChange={(e) => handleCarChange(index, "year", e.target.value)}
-                required
               />
             </div>
             <div className={styles.inputContainer}>
@@ -282,7 +274,6 @@ const AddClientPage = () => {
                 onChange={(e) =>
                   handleCarChange(index, "model", e.target.value)
                 }
-                required
               />
             </div>
             <div className={styles.inputContainer}>
