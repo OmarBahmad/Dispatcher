@@ -106,45 +106,47 @@ const AddClientPage = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <h3 className={styles.label}>Client</h3>
         {/* Client Data */}
-        <div className={styles.inputContainer}>
-          <label>Name</label>
-          <input type="text" placeholder="Client Name" name="name" />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Email</label>
-          <input type="email" placeholder="Client Email" name="email" />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Client Image (URL)</label>
-          <input
-            type="text"
-            placeholder="Client Image (URL)"
-            name="clientImg"
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Budget</label>
-          <input type="number" placeholder="Budget" name="budget" />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Address</label>
-          <input type="text" placeholder="Address" name="address" />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Payment Method</label>
-          <input
-            type="text"
-            placeholder="Payment Method"
-            name="paymentMethod"
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Phone</label>
-          <input type="text" placeholder="Phone" name="phone" />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Note</label>
-          <textarea placeholder="Note (Others)" name="note" />
+        <div className={styles.formContent}>
+          <div className={styles.inputContainer}>
+            <label>Name</label>
+            <input type="text" placeholder="Client Name" name="name" />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Email</label>
+            <input type="email" placeholder="Client Email" name="email" />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Client Image (URL)</label>
+            <input
+              type="text"
+              placeholder="Client Image (URL)"
+              name="clientImg"
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Budget</label>
+            <input type="number" placeholder="Budget" name="budget" />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Address</label>
+            <input type="text" placeholder="Address" name="address" />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Payment Method</label>
+            <input
+              type="text"
+              placeholder="Payment Method"
+              name="paymentMethod"
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Phone</label>
+            <input type="text" placeholder="Phone" name="phone" />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Note</label>
+            <textarea placeholder="Note (Others)" name="note" />
+          </div>
         </div>
         <div className={styles.titleContainer}>
           <h3 className={styles.label}>Insurance</h3>
@@ -157,7 +159,10 @@ const AddClientPage = () => {
           </button>
         </div>
         {insuranceData.map((insurance, index) => (
-          <div key={index} className={styles.insuranceContainer}>
+          <div key={index} className={`${styles.insuranceContainer} ${styles.formContent}`}>
+            <div className={styles.titleLabel}>
+              <label>Insurance {index + 1}</label>
+            </div>
             <div className={styles.inputContainer}>
               <label>Agent</label>
               <input
@@ -255,7 +260,10 @@ const AddClientPage = () => {
           </button>
         </div>
         {cars.map((car, index) => (
-          <div key={index} className={styles.carContainer}>
+          <div key={index} className={`${styles.carContainer} ${styles.formContent}`}>
+            <div className={styles.titleLabel}>
+              <label>Car {index + 1}</label>
+            </div>
             <div className={styles.inputContainer}>
               <label>Year</label>
               <input

@@ -1,80 +1,103 @@
 import { updateClient } from "@/app/lib/actions";
-import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
-
+import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
 
 const SingleClient = ({ client }) => {
-  console.log('client', client)
- return (
-  <div className={styles.formContainer}>
+  return (
+    <div className={styles.formContainer}>
       <form action={updateClient} className={styles.form}>
         <input type="hidden" name="id" value={client.id} />
-        <h3 className={styles.label}>Client</h3>
         {/* Client Data */}
-        <div className={styles.inputContainer}>
-          <label>Name</label>
-          <input type="text" placeholder="Client Name" name="name" defaultValue={client.name} />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder="Client Email"
-            name="email"
-            defaultValue={client.email}
-          />
-        </div>
-        
-
-        <div className={styles.inputContainer}>
-          <label>Client Image (URL)</label>
-          <input
-            type="text"
-            placeholder="Client Image (URL)"
-            name="clientImg"
-            defaultValue={client.clientImg}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Budget</label>
-          <input type="number" placeholder="Budget" name="budget"
-          defaultValue={client.budget}  />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Address</label>
-          <input type="text" placeholder="Address" name="address"
-          defaultValue={client.address} />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Payment Method</label>
-          <input
-            type="text"
-            placeholder="Payment Method"
-            name="paymentMethod"
-            defaultValue={client.paymentMethod}
-          />
-        </div>
-        <div className={styles.inputContainer}>
-          <label>Phone</label>
-          <input type="text" placeholder="Phone" name="phone" 
-          defaultValue={client.phone} />
+        <div className={styles.formContent}>
+          <div className={styles.inputContainer}>
+            <label>Name</label>
+            <input
+              type="text"
+              placeholder="Client Name"
+              name="name"
+              defaultValue={client.name}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Client Email"
+              name="email"
+              defaultValue={client.email}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Client Image (URL)</label>
+            <input
+              type="text"
+              placeholder="Client Image (URL)"
+              name="clientImg"
+              defaultValue={client.clientImg}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Budget</label>
+            <input
+              type="number"
+              placeholder="Budget"
+              name="budget"
+              defaultValue={client.budget}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Address</label>
+            <input
+              type="text"
+              placeholder="Address"
+              name="address"
+              defaultValue={client.address}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Payment Method</label>
+            <input
+              type="text"
+              placeholder="Payment Method"
+              name="paymentMethod"
+              defaultValue={client.paymentMethod}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <label>Phone</label>
+            <input
+              type="text"
+              placeholder="Phone"
+              name="phone"
+              defaultValue={client.phone}
+            />
+          </div>
         </div>
         <div className={styles.inputContainer}>
           <label>Note</label>
-          <textarea placeholder="Note (Others)" name="note" 
-          defaultValue={client.note} />
+          <textarea
+            placeholder="Note (Others)"
+            name="note"
+            defaultValue={client.note}
+            rows="10"
+          />
         </div>
+
+        {/* Insurance Data */}
         <div className={styles.titleContainer}>
           <h3 className={styles.label}>Insurance</h3>
           <button
             className={styles.addButton}
             type="button"
-            onClick={'addInsurance'}
+            onClick={"addInsurance"}
           >
             Add Insurance
           </button>
         </div>
         {client.insuranceData.map((insurance, index) => (
-          <div key={index} className={styles.insuranceContainer}>
+          <div key={index} className={`${styles.formContent} ${styles.insuranceContainer}`}>
+            <div className={styles.titleLabel}>
+              <label>Insurance {index + 1}</label>
+            </div>
             <div className={styles.inputContainer}>
               <label>Agent</label>
               <input
@@ -95,7 +118,6 @@ const SingleClient = ({ client }) => {
                 // onChange={(e) =>
                 //   handleInsuranceChange(index, "company", e.target.value)
                 // }
-                
               />
             </div>
             <div className={styles.inputContainer}>
@@ -168,12 +190,15 @@ const SingleClient = ({ client }) => {
         ))}
         <div className={styles.titleContainer}>
           <h3 className={styles.label}>Cars</h3>
-          <button type="button" className={styles.addButton} onClick={'addCar'}>
+          <button type="button" className={styles.addButton} onClick={"addCar"}>
             Add Car
           </button>
         </div>
         {client.cars.map((car, index) => (
-          <div key={index} className={styles.carContainer}>
+          <div key={index} className={`${styles.carContainer} ${styles.formContent}`}>
+            <div className={styles.titleLabel}>
+              <label>Car {index + 1}</label>
+            </div>
             <div className={styles.inputContainer}>
               <label>Year</label>
               <input
@@ -181,7 +206,6 @@ const SingleClient = ({ client }) => {
                 placeholder="Year"
                 defaultValue={car.year}
                 // onChange={(e) => handleCarChange(index, "year", e.target.value)}
-               
               />
             </div>
             <div className={styles.inputContainer}>
@@ -193,7 +217,6 @@ const SingleClient = ({ client }) => {
                 // onChange={(e) =>
                 //   handleCarChange(index, "model", e.target.value)
                 // }
-               
               />
             </div>
             <div className={styles.inputContainer}>
@@ -340,9 +363,9 @@ const SingleClient = ({ client }) => {
         <button type="submit" className={styles.submitButton}>
           Submit
         </button>
-        </form>
-  </div>
- )
-}
+      </form>
+    </div>
+  );
+};
 
-export default SingleClient
+export default SingleClient;

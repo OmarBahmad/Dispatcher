@@ -5,20 +5,40 @@
   margin-top: 20px;
 }
 
+.infoContainer {
+  font-size: 24px;
+  margin-bottom: 10px;
+  
+}
+
 .form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .label {
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 10px;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .inputContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  width: 45%;
+}
+
+.inputContainer:has(textarea) {
+  width: 100%;
+  max-width: 100%;
 }
 
 .inputContainer label {
@@ -37,6 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 15px;
 }
 
 .insuranceContainer,
@@ -56,11 +77,11 @@
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
 .removeButton {
   background-color: #f44336;
+  width: 100%;
 }
 
 .addButton:hover,
@@ -76,4 +97,9 @@
   border: 2px solid #2e374a;
   border-radius: 5px;
   margin-bottom: 30px;
+  }
+
+  .titleLabel { 
+    width: 100%;
+    font-size: 24px;
   }
