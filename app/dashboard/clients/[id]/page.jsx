@@ -5,6 +5,8 @@ import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.
 const SingleClientPage = async ({ params }) => {
   const { id } = params;
   const client = await fetchSingleClient(id);
+  const cleanClient = JSON.parse(client);
+  console.log(cleanClient)
 
   if (!client) {
     return <div>Loading...</div>;
@@ -14,7 +16,7 @@ const SingleClientPage = async ({ params }) => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>{client.name}</div>
       
-      {<SingleClient client={client} />}
+      {<SingleClient client={cleanClient} />}
     </div>
   );
 };

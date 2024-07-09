@@ -8,7 +8,6 @@
 .infoContainer {
   font-size: 24px;
   margin-bottom: 10px;
-  
 }
 
 .form {
@@ -66,7 +65,8 @@
   border: 1px solid #2e374a;
   border-radius: 4px;
   margin-bottom: 10px;
-  box-shadow: #2e374a 0px 2px 4px -1px, #2e374a 0px 4px 5px 0px, #2e374a 0px 1px 10px 0px;
+  box-shadow: #2e374a 0px 2px 4px -1px, #2e374a 0px 4px 5px 0px,
+    #2e374a 0px 1px 10px 0px;
 }
 
 .addButton,
@@ -91,16 +91,35 @@
   opacity: 0.8;
 }
 
-.form input, .form textarea, .form select{
+.form input,
+.form textarea,
+.form select {
   padding: 30px;
   background-color: var(--bg);
   color: var(--text);
   border: 2px solid #2e374a;
   border-radius: 5px;
   margin-bottom: 30px;
-  }
+}
 
-  .titleLabel { 
-    width: 100%;
-    font-size: 24px;
-  }
+.titleLabel {
+  width: 100%;
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.titleLabel label {
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 18px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
