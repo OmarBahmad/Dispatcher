@@ -77,7 +77,7 @@ export const fetchSingleClient = async (id) => {
   try {
     connectToDB();
     const client = await Client.findById(id);
-    return client;
+    return JSON.stringify(client)
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch Client.");

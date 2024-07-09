@@ -1,61 +1,125 @@
 .container {
-  display: flex;
-  gap: 50px;
+  background-color: var(--bgSoft);
+  padding: 20px;
+  border-radius: 10px;
   margin-top: 20px;
-  flex-direction: column;
 }
 
 .infoContainer {
-  flex: 1;
-  background-color: var(--bgSoft);
-  padding: 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  color: var(--textSoft);
-  height: max-content;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.imgContainer{
-  width: 100%;
-  height: 100px;
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.formContainer {
-  flex: 3;
-  background-color: var(--bgSoft);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.form{
+.form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.form input, .form textarea, .form select{
-  padding: 20px;
-  border: 2px solid #2e374a;
-  border-radius: 5px;
+.label {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 45%;
+}
+
+.inputContainer:has(textarea) {
+  width: 100%;
+  max-width: 100%;
+}
+
+.inputContainer label {
+  margin-bottom: 5px;
+}
+
+.inputContainer input,
+.inputContainer select,
+.inputContainer textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.insuranceContainer,
+.carContainer {
+  padding: 10px;
+  border: 1px solid #2e374a;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-shadow: #2e374a 0px 2px 4px -1px, #2e374a 0px 4px 5px 0px,
+    #2e374a 0px 1px 10px 0px;
+}
+
+.addButton,
+.removeButton,
+.submitButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.removeButton {
+  background-color: #f44336;
+  width: 100%;
+}
+
+.addButton:hover,
+.removeButton:hover,
+.submitButton:hover {
+  opacity: 0.8;
+}
+
+.form input,
+.form textarea,
+.form select {
+  padding: 30px;
   background-color: var(--bg);
   color: var(--text);
-  margin: 10px 0px;
-}
-
-.form label{
-  font-size: 12px;
-}
-
-.form button{
-  width: 100%;
-  padding: 20px;
-  background-color: teal;
-  color: var(--text);
-  border: none;
+  border: 2px solid #2e374a;
   border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.titleLabel {
+  width: 100%;
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
   cursor: pointer;
-  margin-top: 20px;
+}
+
+.titleLabel label {
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 18px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
