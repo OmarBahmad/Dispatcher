@@ -1,19 +1,28 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-const CarItem = ({ car, index }) => {
+const CarItem = ({ car, index, onChange, onRemove }) => {
+  const [carData, setCarData] = useState(car);
   const [showContent, setShowContent] = useState(false);
 
-  const toggleContent = () => {
-    setShowContent(!showContent);
+  useEffect(() => {
+    onChange(index, carData);
+  }, [carData, index]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCarData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
-    <div key={index} className={`${styles.carContainer} ${styles.formContent}`}>
-      <div className={styles.titleLabel} onClick={toggleContent}>
-        <label>{car.model || `New Car ${index + 1}`}</label>
+    <div className={`${styles.carContainer} ${styles.formContent}`}>
+      <div className={styles.titleLabel} onClick={() => setShowContent(!showContent)}>
+        <label>{carData.model || `New Car ${index + 1}`}</label>
         <span className={`${styles.arrow}`}>
           {showContent ? <FiChevronUp /> : <FiChevronDown />}
         </span>
@@ -25,8 +34,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="number"
               placeholder="Year"
-              defaultValue={car.year}
-              // onChange={(e) => handleCarChange(index, "year", e.target.value)}
+              name="year"
+              value={carData.year}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -34,10 +44,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Model"
-              defaultValue={car.model}
-              // onChange={(e) =>
-              //   handleCarChange(index, "model", e.target.value)
-              // }
+              name="model"
+              value={carData.model}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -45,8 +54,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Trim"
-              defaultValue={car.trim}
-              // onChange={(e) => handleCarChange(index, "trim", e.target.value)}
+              name="trim"
+              value={carData.trim}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -54,10 +64,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Chassis (VIN Number)"
-              defaultValue={car.chassis}
-              // onChange={(e) =>
-              //   handleCarChange(index, "chassis", e.target.value)
-              // }
+              name="chassis"
+              value={carData.chassis}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -65,10 +74,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="number"
               placeholder="Miles"
-              defaultValue={car.miles}
-              // onChange={(e) =>
-              //   handleCarChange(index, "miles", e.target.value)
-              // }
+              name="miles"
+              value={carData.miles}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -76,17 +84,17 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Color"
-              defaultValue={car.color}
-              // onChange={(e) =>
-              //   handleCarChange(index, "color", e.target.value)
-              // }
+              name="color"
+              value={carData.color}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
             <label>Type of Use</label>
             <select
-              defaultValue={car.type}
-              // onChange={(e) => handleCarChange(index, "type", e.target.value)}
+              name="type"
+              value={carData.type}
+              onChange={handleInputChange}
             >
               <option value="">Select Type</option>
               <option value="commercial">Commercial</option>
@@ -98,19 +106,17 @@ const CarItem = ({ car, index }) => {
             <input
               type="number"
               placeholder="Weight (lbs)"
-              defaultValue={car.weight}
-              // onChange={(e) =>
-              //   handleCarChange(index, "weight", e.target.value)
-              // }
+              name="weight"
+              value={carData.weight}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
             <label>Plate Type</label>
             <select
-              defaultValue={car.plateType}
-              // onChange={(e) =>
-              //   handleCarChange(index, "plateType", e.target.value)
-              // }
+              name="plateType"
+              value={carData.plateType}
+              onChange={handleInputChange}
             >
               <option value="">Select Plate Type</option>
               <option value="public">Public</option>
@@ -122,10 +128,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Plate Number"
-              defaultValue={car.plateNumber}
-              // onChange={(e) =>
-              //   handleCarChange(index, "plateNumber", e.target.value)
-              // }
+              name="plateNumber"
+              value={carData.plateNumber}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -133,10 +138,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="number"
               placeholder="Market Value"
-              defaultValue={car.marketValue}
-              // onChange={(e) =>
-              //   handleCarChange(index, "marketValue", e.target.value)
-              // }
+              name="marketValue"
+              value={carData.marketValue}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -144,10 +148,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="date"
               placeholder="Plate Expiration Date"
-              defaultValue={car.plateExpiration}
-              // onChange={(e) =>
-              //   handleCarChange(index, "plateExpiration", e.target.value)
-              // }
+              name="plateExpiration"
+              value={carData.plateExpiration}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -155,10 +158,9 @@ const CarItem = ({ car, index }) => {
             <input
               type="number"
               placeholder="Insurance Value"
-              defaultValue={car.insuranceValue}
-              // onChange={(e) =>
-              //   handleCarChange(index, "insuranceValue", e.target.value)
-              // }
+              name="insuranceValue"
+              value={carData.insuranceValue}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -166,16 +168,15 @@ const CarItem = ({ car, index }) => {
             <input
               type="text"
               placeholder="Coverage Type"
-              defaultValue={car.coverageType}
-              // onChange={(e) =>
-              //   handleCarChange(index, "coverageType", e.target.value)
-              // }
+              name="coverageType"
+              value={carData.coverageType}
+              onChange={handleInputChange}
             />
           </div>
           <button
             type="button"
             className={styles.removeButton}
-            // onClick={() => removeCar(index)}
+            onClick={() => onRemove(index)}
           >
             Remove Car
           </button>

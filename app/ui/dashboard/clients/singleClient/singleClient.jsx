@@ -1,13 +1,27 @@
+"use client"
+import React, { useState } from "react";
 import { updateClient } from "@/app/lib/actions";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
 import CarList from "./carList/carList";
 import InsuranceList from "./insuranceList/insuranceList";
 
 const SingleClient = ({ client, id }) => {
-  
+  const [insuranceData, setInsuranceData] = useState(client.insuranceData || []);
+  const [carData, setCarData] = useState(client.cars || []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
+
+    const formData = new FormData(e.target);
+    formData.append("insuranceData", JSON.stringify(insuranceData));
+    formData.append("cars", JSON.stringify(carData));
+    console.log("formData", formData);
+    await updateClient(formData);
+  };
+
   return (
     <div className={styles.formContainer}>
-      <form action={updateClient} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input type="hidden" name="id" value={id} />
         {/* Client Data */}
         <div className={styles.formContent}>
@@ -84,8 +98,8 @@ const SingleClient = ({ client, id }) => {
             rows="10"
           />
         </div>
-        <InsuranceList insurance={client.insuranceData} />
-        <CarList cars={client.cars} />
+        <InsuranceList insurance={client.insuranceData} onChange={setInsuranceData} />
+        <CarList cars={client.cars} onChange={setCarData} />
         <button type="submit" className={styles.submitButton}>
           Submit
         </button>
