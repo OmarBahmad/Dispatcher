@@ -6,7 +6,6 @@ const SingleClientPage = async ({ params }) => {
   const { id } = params;
   const client = await fetchSingleClient(id);
   const cleanClient = JSON.parse(client);
-  console.log(cleanClient)
 
   if (!client) {
     return <div>Loading...</div>;
@@ -16,7 +15,7 @@ const SingleClientPage = async ({ params }) => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>{client.name}</div>
       
-      {<SingleClient client={cleanClient} />}
+      {<SingleClient client={cleanClient} id={id} />}
     </div>
   );
 };

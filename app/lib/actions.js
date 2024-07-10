@@ -211,7 +211,8 @@ export const updateClient = async (formData) => {
       cars,
     };
 
-    // Remove campos vazios ou indefinidos
+
+    console.log('updateFields', updateFields)
     Object.keys(updateFields).forEach(
       (key) =>
         (updateFields[key] === "" || updateFields[key] === undefined) &&

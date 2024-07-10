@@ -3,12 +3,12 @@ import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.
 import CarList from "./carList/carList";
 import InsuranceList from "./insuranceList/insuranceList";
 
-const SingleClient = ({ client }) => {
+const SingleClient = ({ client, id }) => {
   
   return (
     <div className={styles.formContainer}>
       <form action={updateClient} className={styles.form}>
-        <input type="hidden" name="id" value={client.id} />
+        <input type="hidden" name="id" value={id} />
         {/* Client Data */}
         <div className={styles.formContent}>
           <div className={styles.inputContainer}>
