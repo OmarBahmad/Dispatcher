@@ -1,24 +1,28 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
-
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-const InsuranceItem = ({ insurance, index }) => {
+const InsuranceItem = ({ insurance, index, onChange, onRemove }) => {
+  const [insuranceData, setInsuranceData] = useState(insurance);
   const [showContent, setShowContent] = useState(false);
 
-  const toggleContent = () => {
-    setShowContent(!showContent);
+  useEffect(() => {
+    onChange(index, insuranceData);
+  }, [insuranceData, index]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInsuranceData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
-    <div
-      key={index}
-      className={`${styles.formContent} ${styles.insuranceContainer}`}
-    >
-      <div className={styles.titleLabel} onClick={toggleContent}>
-        <label> {insurance.company || `New Insurance ${index + 1}`}</label>
-        <span className={`${styles.arrow}`}>
+    <div className={`${styles.formContent} ${styles.insuranceContainer}`}>
+      <div className={styles.titleLabel} onClick={() => setShowContent(!showContent)}>
+        <label>{insuranceData.company || `New Insurance ${index + 1}`}</label>
+        <span className={styles.arrow}>
           {showContent ? <FiChevronUp /> : <FiChevronDown />}
         </span>
       </div>
@@ -29,10 +33,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="text"
               placeholder="Agent"
-              defaultValue={insurance.agent}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "agent", e.target.value)
-              // }
+              name="agent"
+              value={insuranceData.agent}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -40,10 +43,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="text"
               placeholder="Company"
-              defaultValue={insurance.company}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "company", e.target.value)
-              // }
+              name="company"
+              value={insuranceData.company}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -51,10 +53,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="number"
               placeholder="Contact"
-              defaultValue={insurance.contact}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "contact", e.target.value)
-              // }
+              name="contact"
+              value={insuranceData.contact}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -62,10 +63,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="text"
               placeholder="Policy Number"
-              defaultValue={insurance.policyNumber}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "policyNumber", e.target.value)
-              // }
+              name="policyNumber"
+              value={insuranceData.policyNumber}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -73,14 +73,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="text"
               placeholder="Coverage Type"
-              defaultValue={insurance.insurancecoverageType}
-              // onChange={(e) =>
-              //   handleInsuranceChange(
-              //     index,
-              //     "insurancecoverageType",
-              //     e.target.value
-              //   )
-              // }
+              name="insurancecoverageType"
+              value={insuranceData.insurancecoverageType}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -88,10 +83,9 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="date"
               placeholder="Monthly Due Date"
-              defaultValue={insurance.monthlyDueDate}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "monthlyDueDate", e.target.value)
-              // }
+              name="monthlyDueDate"
+              value={insuranceData.monthlyDueDate}
+              onChange={handleInputChange}
             />
           </div>
           <div className={styles.inputContainer}>
@@ -99,16 +93,15 @@ const InsuranceItem = ({ insurance, index }) => {
             <input
               type="number"
               placeholder="Monthly Amount"
-              defaultValue={insurance.monthlyAmount}
-              // onChange={(e) =>
-              //   handleInsuranceChange(index, "monthlyAmount", e.target.value)
-              // }
+              name="monthlyAmount"
+              value={insuranceData.monthlyAmount}
+              onChange={handleInputChange}
             />
           </div>
           <button
             type="button"
             className={styles.removeButton}
-            // onClick={() => removeInsurance(index)}
+            onClick={() => onRemove(index)}
           >
             Remove Insurance
           </button>

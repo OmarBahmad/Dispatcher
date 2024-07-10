@@ -1,10 +1,14 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CarItem from './carItem/carItem';
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
 
-const CarList = ({ cars }) => {
-  const [carList, setCarList] = useState(cars);
+const CarList = ({ cars, onChange }) => {
+  const [carList, setCarList] = useState(cars || []);
+
+  useEffect(() => {
+    onChange(carList);
+  }, [carList, onChange]);
 
   const addCar = () => {
     const newCar = {
@@ -27,16 +31,34 @@ const CarList = ({ cars }) => {
     setCarList([...carList, newCar]);
   };
 
+  const updateCar = (index, updatedCar) => {
+    const updatedList = carList.map((car, idx) =>
+      idx === index ? updatedCar : car
+    );
+    setCarList(updatedList);
+  };
+
+  const removeCar = (index) => {
+    const updatedList = carList.filter((_, idx) => idx !== index);
+    setCarList(updatedList);
+  };
+
   return (
     <>
       <div className={styles.titleContainer}>
-          <h3 className={styles.label}>Cars</h3>
-          <button type="button" className={styles.addButton} onClick={() => addCar()}>
-            Add Car
-          </button>
-        </div>
+        <h3 className={styles.label}>Cars</h3>
+        <button type="button" className={styles.addButton} onClick={addCar}>
+          Add Car
+        </button>
+      </div>
       {carList.map((car, index) => (
-        <CarItem key={index} car={car} index={index} />
+        <CarItem 
+          key={index} 
+          car={car} 
+          index={index} 
+          onChange={updateCar} 
+          onRemove={removeCar} 
+        />
       ))}
     </>
   );

@@ -207,8 +207,8 @@ export const updateClient = async (formData) => {
       paymentMethod,
       phone,
       note,
-      insuranceData,
-      cars,
+      insuranceData: JSON.parse(insuranceData),
+      cars: JSON.parse(cars),
     };
 
 
