@@ -1,5 +1,8 @@
 "use client";
 import { addTask } from "@/app/lib/actions";
+import CarSelectionModal from "@/app/ui/dashboard/modalsteps/carSelectionModal";
+import ClientSelectionModal from "@/app/ui/dashboard/modalsteps/clientSelectionModal";
+import InsuranceSelectionModal from "@/app/ui/dashboard/modalsteps/insuranceSelectionModal";
 import styles from "@/app/ui/dashboard/tasks/addTask/addTask.module.css";
 import { useState, useEffect } from "react";
 
@@ -9,18 +12,104 @@ const AddTaskPage = () => {
   const [paidAmount, setPaidAmount] = useState(0);
   const [total, setTotal] = useState(0);
   const [dueAmount, setDueAmount] = useState(0);
+  const [clientName, setClientName] = useState("");
+  const [clients, setClients] = useState([]); // Lista de clientes retornados
+  const [selectedClient, setSelectedClient] = useState(null); // Cliente selecionado
+  const [selectedInsurance, setSelectedInsurance] = useState(null); // Seguro selecionado
+  const [selectedCar, setSelectedCar] = useState(null); // Carro selecionado
+  const [typingTimeout, setTypingTimeout] = useState(null);
+  const [loading, setLoading] = useState(false); // Estado do loader
+  const [showModal, setShowModal] = useState(false); // Estado do modal
+  const [modalStep, setModalStep] = useState(1); // Passo atual do modal (1: cliente, 2: seguro, 3: carro)
+  const [shouldFetch, setShouldFetch] = useState(false); // Estado para controlar a busca
 
   useEffect(() => {
     setTotal(Number(labor) + Number(overtime));
     setDueAmount(Number(total) - Number(paidAmount));
   }, [labor, overtime, total, paidAmount]);
 
+  useEffect(() => {
+    if (shouldFetch && clientName) {
+      setLoading(true); // Exibe o loader
+      setShowModal(true); // Exibe o overlay com o loader
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+      }
+      
+      const timeout = setTimeout(async () => {
+        try {
+          const response = await fetch(`/api/clients?name=${clientName}`);
+
+          if (response.ok) {
+            const data = await response.json();
+            setClients(data); // Armazena os dados dos clientes encontrados
+            setModalStep(1); // Vai para a primeira etapa do modal
+          } else {
+            setClients([]);
+            setShowModal(false);
+          }
+        } catch (error) {
+          console.error("Erro ao buscar cliente:", error);
+          setClients([]);
+          setShowModal(false);
+        } finally {
+          setLoading(false); // Oculta o loader após a busca
+        }
+      }, 2000);
+
+      setTypingTimeout(timeout);
+    } 
+  }, [shouldFetch, clientName]); // Agora depende de shouldFetch e clientName
+
+  useEffect(() => {
+    if (selectedClient) {
+      setModalStep(2); // Passa para a escolha do seguro
+      setClientName(selectedClient.name); // Atualiza o nome do cliente sem disparar nova busca
+      setShouldFetch(false); // Evita nova busca ao selecionar cliente
+    }
+  }, [selectedClient]);
+
+  useEffect(() => {
+    if (selectedInsurance) {
+      setModalStep(3); // Passa para a escolha do carro
+    }
+  }, [selectedInsurance]);
+
+  useEffect(() => {
+    if (selectedCar) {
+      setShowModal(false); // Fecha o modal após a escolha do carro
+    }
+      // setDriverName(selectedClient.drivername);
+      // setCar(selectedClient.car);
+      // setDriverLicence(selectedClient.driverlicence);
+  }, [selectedCar]);
+
+  const closeModal = () => {
+    setShowModal(false);
+    setClients([]);
+    setLoading(false);
+  };
+
+  const handleClientNameChange = (e) => {
+    setClientName(e.target.value);
+    setShouldFetch(true); // Habilita a busca apenas quando o usuário digita
+  };
+
   return (
     <div className={styles.container}>
       <form action={addTask} className={styles.form}>
         <div className={styles.inputContainer}>
-          <label htmlFor="title">Title</label>
-          <input type="text" id="title" placeholder="Title" name="title" required />
+          <label htmlFor="Client Name">Client Name</label>
+          <input
+            type="text"
+            id="clientname"
+            placeholder="Client Name"
+            name="clientname"
+            value={clientName}
+            onChange={handleClientNameChange}
+            required
+          />
+          {loading && <span className={styles.loader}></span>}
         </div>
 
         <div className={styles.inputContainer}>
@@ -45,7 +134,13 @@ const AddTaskPage = () => {
 
         <div className={styles.inputContainer}>
           <label htmlFor="drivername">Driver Name</label>
-          <input type="text" id="drivername" placeholder="Driver Name" name="drivername" />
+          <input
+            type="text"
+            id="drivername"
+            placeholder="Driver Name"
+            name="drivername"
+            value={selectedClient?.drivername || ""}
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -95,6 +190,27 @@ const AddTaskPage = () => {
 
         <button type="submit">Submit</button>
       </form>
+      {showModal && modalStep === 1 && (
+        <ClientSelectionModal
+          clients={clients}
+          onSelectClient={(client) => setSelectedClient(client)}
+          onClose={closeModal}
+        />
+      )}
+      {showModal && modalStep === 2 && selectedClient && (
+        <InsuranceSelectionModal
+          insurances={selectedClient.insuranceData}
+          onSelectInsurance={(insurance) => setSelectedInsurance(insurance)}
+          onClose={closeModal}
+        />
+      )}
+      {showModal && modalStep === 3 && selectedInsurance && selectedClient && (
+        <CarSelectionModal
+          cars={selectedClient.cars}
+          onSelectCar={(car) => setSelectedCar(car)}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };
