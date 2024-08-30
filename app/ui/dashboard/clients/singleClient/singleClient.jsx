@@ -15,7 +15,6 @@ const SingleClient = ({ client, id }) => {
     const formData = new FormData(e.target);
     formData.append("insuranceData", JSON.stringify(insuranceData));
     formData.append("cars", JSON.stringify(carData));
-    console.log("formData", formData);
     await updateClient(formData);
   };
 

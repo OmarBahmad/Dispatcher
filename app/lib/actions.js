@@ -93,7 +93,6 @@ export const addTask = async (formData) => {
       car,
       desc
     });
-    console.log('newTask', newTask)
 
     await newTask.save();
   } catch (err) {
@@ -211,8 +210,6 @@ export const updateClient = async (formData) => {
       cars: JSON.parse(cars),
     };
 
-
-    console.log('updateFields', updateFields)
     Object.keys(updateFields).forEach(
       (key) =>
         (updateFields[key] === "" || updateFields[key] === undefined) &&
