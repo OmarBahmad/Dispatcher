@@ -2,8 +2,34 @@
   --bg: #151c2c;
   --bgSoft: #182237;
   --bgSofter: #2e374a;
-  --text: #fff;
+  --text: #ffffff;
   --textSoft: #b7bac1;
+
+  --buttonColor: #0ea5e9; /* Azul vibrante */
+  --buttonColorHover: #0284c7; /* Azul mais escuro no hover */
+
+  --AddbuttonColor: #a855f7; /* Roxo vibrante */
+  --AddbuttonColorHover: #9333ea; /* Roxo mais escuro no hover */
+
+  --warningColor: #f87171; /* Vermelho suave */
+  --warningColorHover: #ef4444; /* Vermelho mais escuro no hover */
+}
+
+.light-theme {
+  --bg: #f8fafc; /* Cinza-claro para o fundo */
+  --bgSoft: #e2e8f0; /* Cinza suave */
+  --bgSofter: #cbd5e1; /* Cinza intermediário */
+  --text: #1e293b; /* Azul-escuro para o texto */
+  --textSoft: #475569; /* Cinza-azulado para subtítulos e texto secundário */
+
+  --buttonColor: #2563eb; /* Azul vibrante para botões */
+  --buttonColorHover: #1d4ed8; /* Azul mais escuro no hover */
+
+  --AddbuttonColor: #7c3aed; /* Roxo vibrante */
+  --AddbuttonColorHover: #6d28d9; /* Roxo mais escuro no hover */
+
+  --warningColor: #ef4444; /* Vermelho vivo para avisos */
+  --warningColorHover: #dc2626; /* Vermelho mais escuro no hover */
 }
 
 * {

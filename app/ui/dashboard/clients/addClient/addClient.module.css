@@ -1,105 +1,206 @@
 .container {
   background-color: var(--bgSoft);
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   margin-top: 20px;
-}
-
-.infoContainer {
-  font-size: 24px;
-  margin-bottom: 10px;
-  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .label {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: var(--text);
+}
+
+.formContentContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4vh;
 }
 
 .formContent {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.formContainer {
+  gap: 40px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 77%;
 }
 
 .inputContainer {
+  width: 38%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  width: 45%;
-}
-
-.inputContainer:has(textarea) {
-  width: 100%;
-  max-width: 100%;
 }
 
 .inputContainer label {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .inputContainer input,
 .inputContainer select,
 .inputContainer textarea {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 15px 10px;
+  border: 1px solid var(--bgSoft);
+  border-radius: 5px;
+  background-color: var(--bgSofter);
+  font-size: 16px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.titleContainer {
+.inputContainer input:focus,
+.inputContainer select:focus,
+.inputContainer textarea:focus {
+  border-color: var(--buttonColor);
+  box-shadow: 0 0 5px var(--bgSoft);
+}
+
+.buttonContainer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
+  gap: 10px;
+  flex-direction: row-reverse;
+  width: 100%;
 }
 
-.insuranceContainer,
-.carContainer {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
+.buttonContainer:has(.prevButton) {
+  flex-direction: row;
 }
 
+.titleLabel {
+  width: 100%;
+}
+
+/* Botões */
 .addButton,
 .removeButton,
-.submitButton {
-  background-color: #4caf50;
+.submitButton,
+.nextButton,
+.prevButton {
+  background-color: var(--buttonColor);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 20px 35px;
+  border-radius: 5px;
   cursor: pointer;
-}
-
-.removeButton {
-  background-color: #f44336;
-  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .addButton:hover,
 .removeButton:hover,
-.submitButton:hover {
-  opacity: 0.8;
+.submitButton:hover,
+.nextButton:hover,
+.prevButton:hover {
+  background-color: var(--buttonColorHover);
+  transform: scale(1.05);
 }
 
-.form input, .form textarea, .form select{
-  padding: 30px;
-  background-color: var(--bg);
-  color: var(--text);
-  border: 2px solid #2e374a;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  }
+.removeButton {
+  background-color: var(--warningColor);
+}
 
-  .titleLabel { 
-    width: 100%;
-    font-size: 24px;
-  }
+.removeButton:hover {
+  background-color: var(--warningColorHover);
+}
+
+.addButton {
+  background-color: var(--AddbuttonColor);
+  width: 78%;
+}
+
+.addButton:hover {
+  background-color: var(--AddbuttonColorHover);
+}
+
+/* Barra de Progresso */
+.progressBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  gap: 10%;
+}
+
+/* Estilizando o Step */
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 8%;
+  height: 14vh;
+  text-align: center;
+  align-content: center;
+  border-radius: 59%;
+  background-color: var(--bg);
+  border: 1px solid var(--bgSofter);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--textSoft);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.progressStep::after {
+  content: '';
+  display: block;
+  position: relative;
+  bottom: 16%;
+  left: 114%;
+  width: 127.5%;
+  height: 4px;
+  background-color: var(--bgSofter);
+  z-index: 2;
+  transition: background-color 1s ease, width 1s ease;
+  transform: translateY(-50%);
+}
+
+.progressStep:last-child::after {
+  display: none !important;
+}
+
+.progressStep.active::after {
+  background-color: var(--buttonColor);
+}
+
+.progressStep.active {
+  background-color: var(--bgSofter);
+  color: var(--text);
+}
+
+.progressLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 4px;
+  background-color: var(--buttonColor);
+  transition: width 0.3s ease;
+  z-index: -1;
+  transform: translateY(-50%);
+  width: 0;
+}

@@ -39,3 +39,13 @@
   display: flex;
   gap: 20px;
 }
+
+.themeToggle {
+  cursor: pointer;
+  color: var(--textSoft);
+  transition: color 0.3s ease;
+}
+
+.themeToggle:hover {
+  color: var(--text);
+}
