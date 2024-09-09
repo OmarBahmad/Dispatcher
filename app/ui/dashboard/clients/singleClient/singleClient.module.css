@@ -62,11 +62,11 @@
 .insuranceContainer,
 .carContainer {
   padding: 10px;
-  border: 1px solid #2e374a;
+  border: 1px solid var(--bgSofter);
   border-radius: 4px;
   margin-bottom: 10px;
-  box-shadow: #2e374a 0px 2px 4px -1px, #2e374a 0px 4px 5px 0px,
-    #2e374a 0px 1px 10px 0px;
+  box-shadow: var(--bgSofter) 0px 2px 4px -1px, var(--bgSofter) 0px 4px 5px 0px,
+    var(--bgSofter) 0px 1px 10px 0px;
 }
 
 .addButton,
@@ -97,7 +97,7 @@
   padding: 30px;
   background-color: var(--bg);
   color: var(--text);
-  border: 2px solid #2e374a;
+  border: 2px solid var(--bgSofter);
   border-radius: 5px;
   margin-bottom: 30px;
 }
