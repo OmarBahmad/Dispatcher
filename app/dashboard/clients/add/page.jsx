@@ -6,7 +6,6 @@ import ClientForm from "@/app/ui/dashboard/clients/Forms/ClientForm/clientForm";
 import InsuranceForm from "@/app/ui/dashboard/clients/Forms/InsuranceForm/InsuranceForm";
 import CarForm from "@/app/ui/dashboard/clients/Forms/CarForm/carForm";
 
-
 const AddClientPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [clientData, setClientData] = useState({
