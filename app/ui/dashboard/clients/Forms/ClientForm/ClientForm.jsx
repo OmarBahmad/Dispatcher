@@ -1,6 +1,6 @@
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
-const ClientForm = ({ clientData, setClientData }) => {
+export const ClientForm = ({ clientData, setClientData }) => {
   const handleClientChange = (e) => {
     const { name, value } = e.target;
     setClientData((prev) => ({ ...prev, [name]: value }));
@@ -94,5 +94,3 @@ const ClientForm = ({ clientData, setClientData }) => {
     </div>
   );
 };
-
-export default ClientForm;

@@ -2,9 +2,9 @@
 import { useState } from "react";
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 import { addClient } from "@/app/lib/actions";
-import ClientForm from "@/app/ui/dashboard/clients/Forms/ClientForm/clientForm";
-import InsuranceForm from "@/app/ui/dashboard/clients/Forms/InsuranceForm/InsuranceForm";
-import CarForm from "@/app/ui/dashboard/clients/Forms/CarForm/carForm";
+import { ClientForm } from "@/app/ui/dashboard/clients/Forms/ClientForm/ClientForm";
+import { InsuranceForm } from "@/app/ui/dashboard/clients/Forms/InsuranceForm/InsuranceForm";
+import { CarForm } from "@/app/ui/dashboard/clients/Forms/CarForm/CarForm";
 
 const AddClientPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
