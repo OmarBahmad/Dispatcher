@@ -1,6 +1,6 @@
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
-const InsuranceForm = ({ insuranceData, setInsuranceData }) => {
+export const InsuranceForm = ({ insuranceData, setInsuranceData }) => {
   const handleInsuranceChange = (index, field, value) => {
     const updatedInsuranceData = [...insuranceData];
     updatedInsuranceData[index][field] = value;
@@ -140,5 +140,3 @@ const InsuranceForm = ({ insuranceData, setInsuranceData }) => {
     </div>
   );
 };
-
-export default InsuranceForm;

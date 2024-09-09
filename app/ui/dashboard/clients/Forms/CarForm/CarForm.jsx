@@ -1,6 +1,6 @@
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
-const CarForm = ({ cars, setCars }) => {
+export const CarForm = ({ cars, setCars }) => {
   const handleCarChange = (index, field, value) => {
     const updatedCars = [...cars];
     updatedCars[index][field] = value;
@@ -216,5 +216,3 @@ const CarForm = ({ cars, setCars }) => {
     </div>
   );
 };
-
-export default CarForm;
