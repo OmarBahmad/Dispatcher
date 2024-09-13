@@ -23,8 +23,6 @@ export const CarForm = ({ cars, setCars }) => {
         plateNumber: "",
         marketValue: "",
         plateExpiration: "",
-        insuranceValue: "",
-        coverageType: "",
       },
     ]);
   };
@@ -182,28 +180,6 @@ export const CarForm = ({ cars, setCars }) => {
                 value={car.plateExpiration}
                 onChange={(e) =>
                   handleCarChange(index, "plateExpiration", e.target.value)
-                }
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label>Insurance Value</label>
-              <input
-                type="number"
-                placeholder="Insurance Value"
-                value={car.insuranceValue}
-                onChange={(e) =>
-                  handleCarChange(index, "insuranceValue", e.target.value)
-                }
-              />
-            </div>
-            <div className={styles.inputContainer}>
-              <label>Coverage Type</label>
-              <input
-                type="text"
-                placeholder="Coverage Type"
-                value={car.coverageType}
-                onChange={(e) =>
-                  handleCarChange(index, "coverageType", e.target.value)
                 }
               />
             </div>

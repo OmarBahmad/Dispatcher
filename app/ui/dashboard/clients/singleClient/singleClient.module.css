@@ -1,125 +1,283 @@
+/* Estilizando o View */
+
 .container {
   background-color: var(--bgSoft);
   padding: 20px;
   border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewContent {
   margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .infoContainer {
-  font-size: 24px;
-  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.clientInfo, .insuranceInfo, .carInfo {
+  background-color: var(--bgSofter);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.clientInfo { 
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.insuranceInfo div, .carInfo div,.clientInfo div {
+  width: 47%;
+  word-break: break-all;
+}
+
+.infoContainer .carTitle,.infoContainer .insuranceTitle {
+  font-weight: 600;
+  width: 100%;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .label {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: var(--text);
+}
+
+.formContentContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4vh;
 }
 
 .formContent {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.formContainer {
+  gap: 40px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 77%;
 }
 
 .inputContainer {
+  width: 38%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  width: 45%;
-}
-
-.inputContainer:has(textarea) {
-  width: 100%;
-  max-width: 100%;
 }
 
 .inputContainer label {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .inputContainer input,
 .inputContainer select,
 .inputContainer textarea {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 15px 10px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 5px;
+  background-color: var(--inputBg);
+  font-size: 16px;
+  color: var(--inputText);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.titleContainer {
+.inputContainer input:focus,
+.inputContainer select:focus,
+.inputContainer textarea:focus {
+  border-color: var(--buttonColor);
+  box-shadow: 0 0 5px var(--bgSoft);
+}
+
+.buttonContainer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.insuranceContainer,
-.carContainer {
-  padding: 10px;
-  border: 1px solid var(--bgSofter);
-  border-radius: 4px;
-  margin-bottom: 10px;
-  box-shadow: var(--bgSofter) 0px 2px 4px -1px, var(--bgSofter) 0px 4px 5px 0px,
-    var(--bgSofter) 0px 1px 10px 0px;
-}
-
-.addButton,
-.removeButton,
-.submitButton {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.removeButton {
-  background-color: #f44336;
+  gap: 10px;
+  flex-direction: row-reverse;
   width: 100%;
 }
 
-.addButton:hover,
-.removeButton:hover,
-.submitButton:hover {
-  opacity: 0.8;
-}
-
-.form input,
-.form textarea,
-.form select {
-  padding: 30px;
-  background-color: var(--bg);
-  color: var(--text);
-  border: 2px solid var(--bgSofter);
-  border-radius: 5px;
-  margin-bottom: 30px;
+.buttonContainer:has(.prevButton) {
+  flex-direction: row;
 }
 
 .titleLabel {
   width: 100%;
-  font-size: 24px;
+}
+
+/* Botões */
+.addButton,
+.removeButton,
+.submitButton,
+.nextButton,
+.prevButton,
+.editButton,
+.cancelButton {
+  background-color: var(--buttonColor);
+  color: white;
+  border: none;
+  padding: 20px 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.addButton:hover,
+.removeButton:hover,
+.submitButton:hover,
+.nextButton:hover,
+.prevButton:hover,
+.editButton:hover,
+.cancelButton:hover {
+  background-color: var(--buttonColorHover);
+  transform: scale(1.05);
+}
+
+.removeButton {
+  background-color: var(--warningColor);
+}
+
+.removeButton:hover {
+  background-color: var(--warningColorHover);
+}
+
+.addButton {
+  background-color: var(--AddbuttonColor);
+  width: 78%;
+}
+
+.addButton:hover {
+  background-color: var(--AddbuttonColorHover);
+}
+
+.editButton {
+  background-color: var(--successColor);
+}
+
+.editButton:hover {
+  background-color: var(--successColorHover);
+}
+
+.cancelButton {
+  background-color: var(--warningColor);
+}
+
+.cancelButton:hover {
+  background-color: var(--warningColorHover);
+}
+
+/* Barra de Progresso */
+.progressBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  gap: 10%;
+}
+
+/* Estilizando o Step */
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 8%;
+  height: 14vh;
+  text-align: center;
   align-content: center;
-  flex-direction: row;
+  border-radius: 59%;
+  background-color: var(--bg);
+  border: 1px solid var(--bgSofter);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--textSoft);
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.titleLabel label {
-  cursor: pointer;
+.progressStep::after {
+  content: '';
+  display: block;
+  position: relative;
+  bottom: 16%;
+  left: 114%;
+  width: 127.5%;
+  height: 4px;
+  background-color: var(--bgSofter);
+  z-index: 2;
+  transition: background-color 1s ease, width 1s ease;
+  transform: translateY(-50%);
 }
 
-.arrow {
-  font-size: 18px;
-  margin-left: 10px;
-  transition: transform 0.3s ease;
-  cursor: pointer;
+.progressStep:last-child::after {
+  display: none !important;
 }
+
+.progressStep.active::after {
+  background-color: var(--buttonColor);
+}
+
+.progressStep.active {
+  background-color: var(--bgSofter);
+  color: var(--text);
+}
+
+.progressLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 4px;
+  background-color: var(--buttonColor);
+  transition: width 0.3s ease;
+  z-index: -1;
+  transform: translateY(-50%);
+  width: 0;
+}
+

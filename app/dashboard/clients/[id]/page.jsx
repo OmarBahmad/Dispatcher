@@ -14,7 +14,6 @@ const SingleClientPage = async ({ params }) => {
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>{client.name}</div>
-      
       {<SingleClient client={cleanClient} id={id} />}
     </div>
   );
