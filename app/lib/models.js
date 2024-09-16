@@ -87,6 +87,7 @@ const clientSchema = new mongoose.Schema(
     paymentMethod: String, // Forma de Pagamento
     phone: String, // Telefone
     note: String, // Observação(Outros)
+    files: String,
     insuranceData: [insuranceSchema], // Dados do Seguro
     cars: [carSchema], // Dados do carro(Cada carro)
   },
