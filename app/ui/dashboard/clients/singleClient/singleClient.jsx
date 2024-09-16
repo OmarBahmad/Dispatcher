@@ -16,10 +16,21 @@ const SingleClient = ({ client, id }) => {
   const [insuranceData, setInsuranceData] = useState([...client.insuranceData]); // Copiar os dados de insurance
   const [cars, setCars] = useState([...client.cars]); // Copiar os dados de cars
   const [pdfs, setPdfs] = useState([]);
+  const [loadingPdfs, setLoadingPdfs] = useState(true); // Estado do Loader
 
   useEffect(() => {
-    // Busca os PDFs do cliente quando o componente é montado
-    fetchPDFs(id).then(setPdfs);
+    const loadPdfs = async () => {
+      try {
+        setLoadingPdfs(true);
+        const fetchedPdfs = await fetchPDFs(id);
+        setPdfs(fetchedPdfs);
+      } catch (error) {
+        console.error("Failed to fetch PDFs", error);
+      } finally {
+        setLoadingPdfs(false);
+      }
+    };
+    loadPdfs();
   }, [id]);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
@@ -36,6 +47,24 @@ const SingleClient = ({ client, id }) => {
       console.error("Failed to download file:", error);
     }
   };
+
+  const handleDelete = async (fileId) => {
+    try {
+      const response = await fetch(`/api/pdf/delete?fileId=${fileId}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        // Atualiza a lista de PDFs após a exclusão bem-sucedida
+        setPdfs((prevPdfs) => prevPdfs.filter((pdf) => pdf._id !== fileId));
+      } else {
+        console.error("Failed to delete file:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +90,7 @@ const SingleClient = ({ client, id }) => {
     // Verifica o resultado da ação
     if (result.success) {
       // Redireciona para a página de clientes se o update for bem-sucedido
-      window.location.href = '/dashboard/clients';
+      window.location.href = `/dashboard/clients/${id}`;
     } else {
       // Lida com o erro (pode exibir uma mensagem de erro)
       console.error('Failed to update client:', result.error);
@@ -88,20 +117,32 @@ const SingleClient = ({ client, id }) => {
             </div>
           </div>
 
-          {/* Exibe os PDFs encontrados */}
-          <h3>Client PDFs</h3>
-          {pdfs.length > 0 ? (
-            <ul>
-              {pdfs.map((pdf) => (
-                <li key={pdf._id}>
-                  <span>{pdf.filename}</span>
-                  <button onClick={() => handleDownload(pdf._id, pdf.filename)}>Download PDF</button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No PDFs found for this client.</p>
-          )}
+          {/* Exibição de PDFs com Loader */}
+          <div className={styles.pdfContainer}>
+            <h3>Client PDFs</h3>
+            {loadingPdfs ? (
+              <div className={styles.loader}></div> // Loader rodando enquanto PDFs são carregados
+            ) : (
+              <div className={styles.pdfInfo}>
+                {pdfs.length > 0 ? (
+                  <ul>
+                    {pdfs.map((pdf) => (
+                      <li key={pdf._id}>
+                        <span>{pdf.filename}</span>
+                        <div className={styles.pdfButtons}>
+                          <button onClick={() => handleDownload(pdf._id, pdf.filename)}>Download PDF</button>
+                          <button className={styles.deleteButton} onClick={() => handleDelete(pdf._id)}>Delete PDF</button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No PDFs found for this client.</p>
+                )}
+              </div>
+            )}
+          </div>
+          
           
           {/* Visualização de Seguros */}
           <div className={`${styles.infoContainer}`}>
@@ -166,7 +207,7 @@ const SingleClient = ({ client, id }) => {
         </div>
 
         {/* Renderizar o conteúdo com base no passo */}
-        {currentStep === 1 && <ClientForm clientData={clientData} setClientData={setClientData} />}
+        {currentStep === 1 && <ClientForm clientData={clientData} setClientData={setClientData} isUpdate={true} />}
         {currentStep === 2 && <InsuranceForm insuranceData={insuranceData} setInsuranceData={setInsuranceData} />}
         {currentStep === 3 && <CarForm cars={cars} setCars={setCars} />}
 

@@ -5,7 +5,7 @@ let client, bucket;
 
 async function initializeBucket() {
   if (!client) {
-    client = await MongoClient.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    client = await MongoClient.connect(mongoURI);
     const db = client.db('dashboard'); // Substitua com o nome do seu banco de dados
     bucket = new GridFSBucket(db, { bucketName: 'pdfFiles' });
   }
