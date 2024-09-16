@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
-export const ClientForm = ({ clientData, setClientData }) => {
+export const ClientForm = ({ clientData, setClientData, isUpdate=false }) => {
+
+  const MAX_FILE_SIZE = 16 * 1024 * 1024; // 16 MB
 
   // Função para capturar mudanças nos campos do cliente
   const handleClientChange = (e) => {
@@ -13,6 +15,13 @@ export const ClientForm = ({ clientData, setClientData }) => {
   // Função para capturar arquivos e armazenar no clientData
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Captura o arquivo PDF
+
+    if (file.size >= MAX_FILE_SIZE) {
+      alert("One or more files exceed the size limit of 16MB.");
+      e.target.value = ""; // Limpa o campo de seleção
+      return; // Impede o envio de arquivos maiores que o limite
+    }
+
     setClientData((prev) => ({ ...prev, files: file }));
   };
 
@@ -118,15 +127,17 @@ export const ClientForm = ({ clientData, setClientData }) => {
       </div>
 
       {/* Input para Upload de Arquivos */}
-      <div className={styles.inputContainer}>
-        <label>Upload Files:</label>
-        <input
-          type="file"
-          name="files"
-          multiple
-          onChange={handleFileChange}
-        />
-      </div>
+      {isUpdate && 
+        <div className={styles.inputContainer}>
+          <label>Upload Files:</label>
+          <input
+            type="file"
+            name="files"
+            multiple
+            onChange={handleFileChange}
+          />
+        </div>
+      }
     </div>
   );
 };
