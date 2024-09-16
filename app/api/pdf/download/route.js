@@ -29,6 +29,7 @@ export async function GET(req) {
     const downloadStream = bucket.openDownloadStream(new ObjectId(fileId));
 
     // Envolvemos o processamento do stream em uma Promise
+    // eslint-disable-next-line no-undef
     return new Promise((resolve, reject) => {
       const chunks = [];
 
