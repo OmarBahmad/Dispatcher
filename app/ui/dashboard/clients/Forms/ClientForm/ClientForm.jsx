@@ -1,13 +1,24 @@
+import { useState } from 'react';
+
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
 export const ClientForm = ({ clientData, setClientData }) => {
+
+  // Função para capturar mudanças nos campos do cliente
   const handleClientChange = (e) => {
     const { name, value } = e.target;
     setClientData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Função para capturar arquivos e armazenar no clientData
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Captura o arquivo PDF
+    setClientData((prev) => ({ ...prev, files: file }));
+  };
+
   return (
     <div className={styles.formContent}>
+      {/* Nome do Cliente */}
       <div className={styles.inputContainer}>
         <label>Name</label>
         <input
@@ -18,6 +29,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Email do Cliente */}
       <div className={styles.inputContainer}>
         <label>Email</label>
         <input
@@ -28,6 +41,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Endereço do Cliente */}
       <div className={styles.inputContainer}>
         <label>Address</label>
         <input
@@ -38,6 +53,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Imagem do Cliente */}
       <div className={styles.inputContainer}>
         <label>Client Image (URL)</label>
         <input
@@ -48,6 +65,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Telefone do Cliente */}
       <div className={styles.inputContainer}>
         <label>Phone</label>
         <input
@@ -58,6 +77,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Tipo de ID */}
       <div className={styles.inputContainer}>
         <label>ID</label>
         <select
@@ -66,12 +87,14 @@ export const ClientForm = ({ clientData, setClientData }) => {
           value={clientData.idType}
           onChange={handleClientChange}
         >
-          <option defaultValue={""}> Choose ID Type</option>
+          <option value=""> Choose ID Type</option>
           <option value="passport"> Passport</option>
           <option value="driverlicence"> Driver Licence</option>
           <option value="other"> Other</option>
         </select>
       </div>
+
+      {/* Número do ID */}
       <div className={styles.inputContainer}>
         <label>ID Number</label>
         <input
@@ -82,6 +105,8 @@ export const ClientForm = ({ clientData, setClientData }) => {
           onChange={handleClientChange}
         />
       </div>
+
+      {/* Notas sobre o Cliente */}
       <div className={styles.inputContainer}>
         <label>Note</label>
         <textarea
@@ -89,6 +114,17 @@ export const ClientForm = ({ clientData, setClientData }) => {
           name="note"
           value={clientData.note}
           onChange={handleClientChange}
+        />
+      </div>
+
+      {/* Input para Upload de Arquivos */}
+      <div className={styles.inputContainer}>
+        <label>Upload Files:</label>
+        <input
+          type="file"
+          name="files"
+          multiple
+          onChange={handleFileChange}
         />
       </div>
     </div>

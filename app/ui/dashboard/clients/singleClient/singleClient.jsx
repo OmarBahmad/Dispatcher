@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/app/ui/dashboard/clients/singleClient/singleClient.module.css";
 
 import { ClientForm } from "../Forms/ClientForm/ClientForm";
@@ -7,7 +7,7 @@ import { InsuranceForm } from "../Forms/InsuranceForm/InsuranceForm";
 import { CarForm } from "../Forms/CarForm/CarForm";
 
 import { updateClient } from "@/app/lib/actions";
-import { formattedDate } from "../../helpers/helpers";
+import { fetchPDFs, formattedDate } from "../../helpers/helpers";
 
 const SingleClient = ({ client, id }) => {
   const [isEditing, setIsEditing] = useState(false); // Controle do modo de edição
@@ -15,6 +15,12 @@ const SingleClient = ({ client, id }) => {
   const [clientData, setClientData] = useState({ ...client }); // Dados do cliente
   const [insuranceData, setInsuranceData] = useState([...client.insuranceData]); // Copiar os dados de insurance
   const [cars, setCars] = useState([...client.cars]); // Copiar os dados de cars
+  const [pdfs, setPdfs] = useState([]);
+
+  useEffect(() => {
+    // Busca os PDFs do cliente quando o componente é montado
+    fetchPDFs(id).then(setPdfs);
+  }, [id]);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
@@ -22,18 +28,44 @@ const SingleClient = ({ client, id }) => {
   const handleEditClick = () => setIsEditing(true); // Ativar modo de edição
   const handleCancelClick = () => setIsEditing(false); // Cancelar edição
 
+  const handleDownload = async (fileId, fileName) => {
+    try {
+      const downloadLink = `/api/pdf/download?fileId=${fileId}&fileName=${fileName}`;
+      window.open(downloadLink);
+    } catch (error) {
+      console.error("Failed to download file:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     clientData.id = id;
     clientData.cars = JSON.stringify(cars);
     clientData.insuranceData = JSON.stringify(insuranceData);
+  
     const formData = new FormData();
-   // Popula o FormData com os dados do cliente
+  
+    // Popula o FormData com os dados do cliente
     Object.keys(clientData).forEach((key) => {
       formData.append(key, clientData[key]);
     });
-    await updateClient(formData);
-    setIsEditing(false);
+  
+    // Adiciona o arquivo PDF ao FormData, se houver
+    if (clientData.files) {
+      formData.append('files', clientData.files);
+    }
+  
+    // Chama a função de atualização do cliente
+    const result = await updateClient(formData);
+  
+    // Verifica o resultado da ação
+    if (result.success) {
+      // Redireciona para a página de clientes se o update for bem-sucedido
+      window.location.href = '/dashboard/clients';
+    } else {
+      // Lida com o erro (pode exibir uma mensagem de erro)
+      console.error('Failed to update client:', result.error);
+    }
   };
   
   if (!isEditing) {
@@ -55,6 +87,22 @@ const SingleClient = ({ client, id }) => {
               <div><strong>Note:</strong> {client.note}</div>
             </div>
           </div>
+
+          {/* Exibe os PDFs encontrados */}
+          <h3>Client PDFs</h3>
+          {pdfs.length > 0 ? (
+            <ul>
+              {pdfs.map((pdf) => (
+                <li key={pdf._id}>
+                  <span>{pdf.filename}</span>
+                  <button onClick={() => handleDownload(pdf._id, pdf.filename)}>Download PDF</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No PDFs found for this client.</p>
+          )}
+          
           {/* Visualização de Seguros */}
           <div className={`${styles.infoContainer}`}>
             <h3>Insurance Information</h3>
