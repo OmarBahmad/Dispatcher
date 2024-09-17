@@ -3,44 +3,60 @@
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Suave sombra para destacar o formulário */
 }
 
 .form {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 20px; /* Espaço entre os campos do formulário */
 }
 
-.form input, .form textarea, .form select{
-padding: 30px;
-background-color: var(--bg);
-color: var(--text);
-border: 2px solid var(--bgSofter);
-border-radius: 5px;
-margin-bottom: 30px;
+.form input,
+.form textarea,
+.form select {
+  padding: 20px; /* Um pouco menos de padding para campos de input */
+  background-color: var(--bg);
+  color: var(--text);
+  border: 2px solid var(--bgSofter);
+  border-radius: 8px;
+  margin-bottom: 20px; /* Menor espaço entre campos */
+  font-size: 16px; /* Tamanho de fonte consistente */
 }
 
-.form div{
+.form div {
   display: flex;
-  width: 45%;
   flex-direction: column;
-  flex-wrap: nowrap;
+  width: 48%; /* Mais espaço para os campos em tela maior */
 }
 
 .form div:has(textarea) {
-  width: 100%;
+  width: 100%; /* Textarea ocupa toda a largura */
 }
+
 .form select {
   text-transform: capitalize;
+  appearance: none; /* Remove estilo padrão de select */
+  background-image: url('/path-to-arrow-icon.svg'); /* Ícone de seta no select */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
 .form button {
   width: 100%;
-  padding: 30px;
+  padding: 20px;
   background-color: teal;
   color: var(--text);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form button:hover {
+  background-color: darkslategray;
+  transform: scale(1.02); /* Pequena animação de hover */
 }
 
 .form input::-webkit-outer-spin-button,
@@ -49,6 +65,75 @@ margin-bottom: 30px;
   margin: 0;
 }
 
-.form input[type=number] {
+.form input[type="number"] {
   -moz-appearance: textfield;
+}
+
+/* Loader dentro do input */
+.loader {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  border: 3px solid #ccc;
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilo do Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--bg);
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  min-height: 150px;
+  max-height: 560px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.modal li {
+  padding: 15px;
+  cursor: pointer;
+  background-color: var(--bgSoft);
+  margin: 10px 0;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.modal li:hover {
+  background-color: var(--bgSofter);
 }
