@@ -15,9 +15,9 @@ const UsersPage = async ({ searchParams }) => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for the user..." />
+        <Search placeholder="Search for a user..." />
         <Link href="/dashboard/users/add">
-          <button className={styles.addButton}>Add new</button>
+          <button className={styles.addButton}>Add New</button>
         </Link>
       </div>
       <table className={styles.table}>
@@ -31,39 +31,37 @@ const UsersPage = async ({ searchParams }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => {
-            return (
-              <tr key={user.id}>
-                <td>
-                  <div className={styles.user}>
-                    <Image
-                      src={user.img || "/noavatar.png"}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className={styles.userImage}
-                    />
-                    {user.username}
-                  </div>
-                </td>
-                <td>{user.email}</td>
-                <td>{user.createdAt?.toString().slice(4, 16)}</td>
-                <td>{user.isAdmin ? "Admin" : "NoAdmin"}</td>
-                <td>
-                  <div className={styles.buttons}>
-                    <Link href={`/dashboard/users/${user.id}`}>
-                      <button className={`${styles.button} ${styles.view}`}>
-                        View
-                      </button>
-                    </Link>
-                    <form action={deleteUser}>
-                      <DeleteButtonWithModal id={user.id} text={'user'}/>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>
+                <div className={styles.user}>
+                  <Image
+                    src={user.img || "/noavatar.png"}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className={styles.userImage}
+                  />
+                  {user.username}
+                </div>
+              </td>
+              <td>{user.email}</td>
+              <td>{user.createdAt?.toString().slice(4, 16)}</td>
+              <td>{user.isAdmin ? "Admin" : "User"}</td>
+              <td>
+                <div className={styles.buttons}>
+                  <Link href={`/dashboard/users/${user.id}`}>
+                    <button className={`${styles.button} ${styles.view}`}>
+                      View
+                    </button>
+                  </Link>
+                  <form action={deleteUser}>
+                    <DeleteButtonWithModal id={user.id} text="user" />
+                  </form>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <Pagination count={count} />

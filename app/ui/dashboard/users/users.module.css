@@ -1,61 +1,146 @@
+/* Layout Geral */
 .container {
-background-color: var(--bgSoft);
-padding: 20px;
-margin-top: 20px;
-border-radius: 10px;
+  background-color: var(--bgSoft);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
 }
 
+/* Cabeçalho com botão e busca */
 .top {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .addButton {
-  padding: 10px;
-  background-color: #5d57c9;
+  padding: 12px 24px;
+  background-color: var(--AddbuttonColor);
   color: var(--text);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.addButton:hover {
+  background-color: var(--AddbuttonColorHover);
+}
+
+/* Tabela de Usuários */
 .table {
   width: 100%;
+  border-collapse: collapse;
 }
 
-.table td {
-  padding: 10px;
+.table th, .table td {
+  padding: 12px;
+  text-align: left;
+  color: var(--textSoft);
+}
+
+.table thead {
+  background-color: var(--bgSofter);
+}
+
+.table tbody tr {
+  background-color: var(--bgSoftest);
+  border-bottom: 1px solid var(--bgSofter);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
 }
 
 .user {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-.userImage{
+.userImage {
   border-radius: 50%;
   object-fit: cover;
 }
 
+/* Ações e botões */
 .buttons {
   display: flex;
   gap: 10px;
 }
 
 .button {
-  padding: 5px 10px;
+  padding: 10px 16px;
   border-radius: 5px;
-  color: var(--text);
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .view {
-  background-color: teal;
+  background-color: var(--infoColor);
+}
+
+.view:hover {
+  background-color: var(--infoColorHover);
 }
 
 .delete {
-  background-color: crimson;
+  background-color: var(--warningColor);
+}
+
+.delete:hover {
+  background-color: var(--warningColorHover);
+}
+
+/* Formulários (Adicionar e Atualizar Usuários) */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form input, .form select {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--inputBg);
+  border: 2px solid var(--inputBorder);
+  border-radius: 5px;
+  color: var(--inputText);
+  font-size: 16px;
+}
+
+.form label {
+  color: var(--textSoft);
+  font-size: 14px;
+}
+
+.submitButton {
+  padding: 15px;
+  background-color: var(--buttonColor);
+  color: var(--text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: var(--buttonColorHover);
+}
+
+/* Imagem do usuário */
+.imgContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.username {
+  font-size: 18px;
+  color: var(--textSoft);
 }

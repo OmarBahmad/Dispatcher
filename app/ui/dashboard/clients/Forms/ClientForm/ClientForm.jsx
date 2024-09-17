@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import styles from "@/app/ui/dashboard/clients/addClient/addClient.module.css";
 
 export const ClientForm = ({ clientData, setClientData, isUpdate=false }) => {
