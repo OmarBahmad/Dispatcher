@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { FiTrash2 } from "react-icons/fi"; // Ícone moderno
 import styles from "./deletebutton.module.css";
 
 const DeleteButtonWithModal = ({ id, text }) => {
@@ -10,8 +11,8 @@ const DeleteButtonWithModal = ({ id, text }) => {
 
   return (
     <>
-      <div className={`${styles.button} ${styles.delete}`} onClick={openModal}>
-        Delete
+      <div className={`${styles.button} ${styles.deleteButton}`} onClick={openModal}>
+        <FiTrash2 /> Delete
       </div>
       {isModalOpen && (
         <div className={styles.modalOverlay}>
@@ -20,7 +21,9 @@ const DeleteButtonWithModal = ({ id, text }) => {
             <p>Are you sure you want to delete this {text}?</p>
             <div className={styles.modalActions}>
               <input type="hidden" name="id" value={id} />
-              <button type='submit' className={styles.confirmButton}>Yes, Delete</button>
+              <button type="submit" className={styles.confirmButton}>
+                Yes, Delete
+              </button>
               <div className={styles.cancelButton} onClick={closeModal}>
                 Cancel
               </div>

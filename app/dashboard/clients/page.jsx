@@ -1,11 +1,13 @@
 import { fetchClients } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
-import styles from "@/app/ui/dashboard/clients/clients.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteClient } from "@/app/lib/actions";
+import { FiEye, FiTrash2, FiPlus } from "react-icons/fi";
 import DeleteButtonWithModal from "@/app/ui/dashboard/components/DeleteButton/deletebutton";
+
+import styles from "@/app/ui/dashboard/clients/clients.module.css";
 
 const ClientsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
@@ -17,9 +19,12 @@ const ClientsPage = async ({ searchParams }) => {
       <div className={styles.top}>
         <Search placeholder="Search for the user..." />
         <Link href="/dashboard/clients/add">
-          <button className={styles.addButton}>Add new</button>
+          <button className={styles.addButton}>
+            <FiPlus /> Add New Client
+          </button>
         </Link>
       </div>
+
       <table className={styles.table}>
         <thead>
           <tr>
@@ -27,38 +32,39 @@ const ClientsPage = async ({ searchParams }) => {
             <td>Email</td>
             <td>Created At</td>
             <td>Phone</td>
-            <td>Type</td>
+            <td>Insurance Company</td>
             <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {clients?.map((client) => {
-            return (
-              <tr key={client.id}>
-                <td>
-                  <div className={styles.user}>{client.name}</div>
-                </td>
-                <td>{client.email}</td>
-                <td>{client.createdAt?.toString().slice(4, 16)}</td>
-                <td>{client.phone}</td>
-                <td>{client.insuranceData[0]?.company}</td>
-                <td>
-                  <div className={styles.buttons}>
-                    <Link href={`/dashboard/clients/${client.id}`}>
-                      <button className={`${styles.button} ${styles.view}`}>
-                        View
-                      </button>
-                    </Link>
-                    <form action={deleteClient}>
-                      <DeleteButtonWithModal id={client.id} text={'client'}/>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {clients?.map((client) => (
+            <tr key={client.id} className={styles.tableRow}>
+              <td>
+                <div className={styles.user}>
+                  <div className={styles.userName}>{client.name}</div>
+                </div>
+              </td>
+              <td>{client.email}</td>
+              <td>{client.createdAt?.toString().slice(4, 16)}</td>
+              <td>{client.phone}</td>
+              <td>{client.insuranceData[0]?.company || 'N/A'}</td>
+              <td>
+                <div className={styles.actionButtons}>
+                  <Link href={`/dashboard/clients/${client.id}`}>
+                    <button className={`${styles.button} ${styles.viewButton}`}>
+                      <FiEye /> View
+                    </button>
+                  </Link>
+                  <form action={deleteClient}>
+                    <DeleteButtonWithModal id={client.id} text={"client"} />
+                  </form>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+
       <Pagination count={count} />
     </div>
   );

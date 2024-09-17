@@ -1,20 +1,24 @@
 import { addUser } from "@/app/lib/actions";
-import styles from "@/app/ui/dashboard/users/addUser/addUser.module.css";
+import styles from "@/app/ui/dashboard/users/users.module.css";
 
 const AddUserPage = () => {
   return (
     <div className={styles.container}>
       <form action={addUser} className={styles.form}>
-        <input type="text" placeholder="User Name" name="username" required />
-        <input type="text" placeholder="Email" name="email" required />
+        <label>Username</label>
+        <input type="text" placeholder="Username" name="username" required />
+        <label>Email</label>
+        <input type="email" placeholder="Email" name="email" required />
+        <label>Password</label>
         <input type="password" placeholder="Password" name="password" required />
-
-        <select name="isAdmin" id="isAdmin">
-          <option value="true" defaultValue>Yes</option>
-          <option value="false">No</option>
+        <label>Role</label>
+        <select name="isAdmin" required>
+          <option value="true">Admin</option>
+          <option value="false">User</option>
         </select>
-
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.submitButton}>
+          Submit
+        </button>
       </form>
     </div>
   );

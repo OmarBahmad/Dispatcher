@@ -1,95 +1,96 @@
 :root {
-  --bg: #151c2c;
-  --bgSoft: #182237;
-  --bgSofter: #2e374a;
-  --bgSoftest: #404b63;
-  --text: #ffffff;
-  --textSoft: #b7bac1;
+  --bg: #1c2331; /* Fundo principal mais claro */
+  --bgSoft: #242d40; /* Suave, para melhor contraste */
+  --bgSofter: #2f3a50; /* Mais intermediário */
+  --bgSoftest: #3b475f; /* Para destacar containers */
+
+  --text: #f5f7fa; /* Texto claro */
+  --textSoft: #b8bec6; /* Texto suave, cinza-claro */
 
   /* Botões principais */
-  --buttonColor: #3b82f6; /* Azul vibrante */
-  --buttonColorHover: #2563eb; /* Azul mais escuro no hover */
+  --buttonColor: #4f82e6; /* Azul levemente mais claro */
+  --buttonColorHover: #3a70db; /* Azul médio no hover */
 
   /* Botões de adicionar */
-  --AddbuttonColor: #8b5cf6; /* Roxo vibrante */
-  --AddbuttonColorHover: #7c3aed; /* Roxo mais escuro no hover */
+  --AddbuttonColor: #6c4acb; /* Roxo moderado */
+  --AddbuttonColorHover: #593ab9; /* Roxo mais suave no hover */
 
   /* Botões de aviso */
-  --warningColor: #ef4444; /* Vermelho suave */
-  --warningColorHover: #dc2626; /* Vermelho mais escuro no hover */
+  --warningColor: #f05050; /* Vermelho suave */
+  --warningColorHover: #e04848; /* Vermelho mais escuro no hover */
 
   /* Verde - sucesso */
-  --successColor: #22c55e; /* Verde para sucesso */
-  --successColorHover: #16a34a; /* Verde mais escuro no hover */
+  --successColor: #28c76f; /* Verde moderado */
+  --successColorHover: #22a55a; /* Verde mais escuro no hover */
 
   /* Amarelo - alerta */
-  --alertColor: #facc15; /* Amarelo para alertas */
-  --alertColorHover: #eab308; /* Amarelo mais escuro no hover */
+  --alertColor: #ffca28; /* Amarelo suave */
+  --alertColorHover: #ffb703; /* Amarelo mais escuro no hover */
 
   /* Cinza - desabilitado */
-  --disabledColor: #9ca3af; /* Cinza desabilitado */
-  --disabledColorHover: #6b7280; /* Cinza mais escuro no hover */
+  --disabledColor: #9ea7b3; /* Cinza suave */
+  --disabledColorHover: #7f8a9a; /* Cinza mais escuro no hover */
 
   /* Azul claro - informação */
-  --infoColor: #0ea5e9; /* Azul claro para informação */
-  --infoColorHover: #0284c7; /* Azul mais escuro no hover */
+  --infoColor: #42a5f5; /* Azul claro para informação */
+  --infoColorHover: #2196f3; /* Azul mais escuro no hover */
 
   /* Laranja - status de progresso */
-  --progressColor: #fb923c; /* Laranja para progresso */
-  --progressColorHover: #f97316; /* Laranja mais escuro no hover */
+  --progressColor: #f57c00; /* Laranja moderado */
+  --progressColorHover: #ef6c00; /* Laranja mais escuro no hover */
 
   /* Fundo de inputs */
-  --inputBg: #2e374a;
-  --inputBorder: #404b63;
-  --inputText: #fff;
+  --inputBg: #3f4b63; /* Fundo de inputs mais claro */
+  --inputBorder: #566080; /* Borda de inputs mais suave */
+  --inputText: #f0f4f8; /* Texto de input claro */
 }
 
 .light-theme {
-  --bg: #f8fafc; /* Cinza-claro para o fundo */
-  --bgSoft: #e2e8f0; /* Cinza suave */
-  --bgSofter: #cbd5e1; /* Cinza intermediário */
-  --bgSoftest: #a8b2c1; /* Cinza mais escuro */
-  --text: #1e293b; /* Azul-escuro para o texto */
-  --textSoft: #475569; /* Cinza-azulado para subtítulos e texto secundário */
+  --bg: #f2f4f8; /* Cinza mais claro para temas claros */
+  --bgSoft: #e5e9f0; /* Fundo suave */
+  --bgSofter: #d8dee5; /* Fundo intermediário */
+  --bgSoftest: #bfc9d6; /* Fundo mais escuro */
+
+  --text: #263747; /* Azul escuro para texto */
+  --textSoft: #607b8b; /* Cinza-azulado para subtítulos */
 
   /* Botões principais */
-  --buttonColor: #2563eb; /* Azul vibrante */
-  --buttonColorHover: #1d4ed8; /* Azul mais escuro no hover */
+  --buttonColor: #5f9ee1; /* Azul vibrante */
+  --buttonColorHover: #4d89ce; /* Azul mais escuro no hover */
 
   /* Botões de adicionar */
-  --AddbuttonColor: #7c3aed; /* Roxo vibrante */
-  --AddbuttonColorHover: #6d28d9; /* Roxo mais escuro no hover */
+  --AddbuttonColor: #865df7; /* Roxo vibrante */
+  --AddbuttonColorHover: #7a4ee7; /* Roxo mais suave no hover */
 
   /* Botões de aviso */
-  --warningColor: #ef4444; /* Vermelho vivo */
-  --warningColorHover: #dc2626; /* Vermelho mais escuro no hover */
+  --warningColor: #ff6655; /* Vermelho vibrante */
+  --warningColorHover: #e65545; /* Vermelho mais escuro no hover */
 
   /* Verde - sucesso */
-  --successColor: #16a34a; /* Verde para sucesso */
-  --successColorHover: #15803d; /* Verde mais escuro no hover */
+  --successColor: #3ddc97; /* Verde vibrante */
+  --successColorHover: #2dbb75; /* Verde mais escuro no hover */
 
   /* Amarelo - alerta */
-  --alertColor: #facc15; /* Amarelo para alertas */
-  --alertColorHover: #eab308; /* Amarelo mais escuro no hover */
+  --alertColor: #ffe066; /* Amarelo suave */
+  --alertColorHover: #ffd944; /* Amarelo mais escuro no hover */
 
   /* Cinza - desabilitado */
-  --disabledColor: #9ca3af; /* Cinza desabilitado */
-  --disabledColorHover: #6b7280; /* Cinza mais escuro no hover */
+  --disabledColor: #c0c6d1; /* Cinza suave */
+  --disabledColorHover: #a8b0bb; /* Cinza mais escuro no hover */
 
   /* Azul claro - informação */
-  --infoColor: #0ea5e9; /* Azul claro para informação */
-  --infoColorHover: #0284c7; /* Azul mais escuro no hover */
+  --infoColor: #4fc3f7; /* Azul claro para informação */
+  --infoColorHover: #42a1e4; /* Azul mais escuro no hover */
 
   /* Laranja - status de progresso */
-  --progressColor: #fb923c; /* Laranja para progresso */
-  --progressColorHover: #f97316; /* Laranja mais escuro no hover */
+  --progressColor: #ffab40; /* Laranja moderado */
+  --progressColorHover: #ff9c20; /* Laranja mais escuro no hover */
 
   /* Fundo de inputs */
-  --inputBg: #cbd5e1;
-  --inputBorder: #a8b2c1;
-  --inputText: #1e293b;
+  --inputBg: #dde3ec;
+  --inputBorder: #c5cfd9;
+  --inputText: #33475b;
 }
-
 
 * {
   margin: 0;

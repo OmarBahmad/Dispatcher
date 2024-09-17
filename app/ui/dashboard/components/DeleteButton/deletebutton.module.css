@@ -1,3 +1,25 @@
+/* Botão de excluir */
+.deleteButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--warningColor);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.deleteButton:hover {
+  background-color: var(--warningColorHover);
+  transform: scale(1.05);
+}
+
+/* Estilizando o modal */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -8,56 +30,75 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modal {
   background-color: var(--bgSoft);
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 400px;
   text-align: center;
-  height: 170px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text);
 }
 
 .modal p {
-  margin: 15px 0;
+  color: var(--textSoft);
+  margin-bottom: 20px;
 }
 
 .modalActions {
   display: flex;
-  margin-top: 20px;
   justify-content: center;
+  gap: 10px;
 }
 
 .confirmButton,
 .cancelButton {
   padding: 10px 20px;
-  margin: 0 10px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-}
-
-.confirmButton {
-  background-color: #ff4757;
-  color: white;
-}
-
-.cancelButton {
-  background-color: #576574;
-  color: white;
-}
-
-.button {
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--text);
-  border: none;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-.delete {
-  background-color: crimson;
+/* Botão de confirmação de exclusão */
+.confirmButton {
+  background-color: var(--warningColor);
+  color: white;
+}
+
+.confirmButton:hover {
+  background-color: var(--warningColorHover);
+}
+
+/* Botão de cancelar */
+.cancelButton {
+  background-color: var(--disabledColor);
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: var(--disabledColorHover);
+}
+
+/* Animação do modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
