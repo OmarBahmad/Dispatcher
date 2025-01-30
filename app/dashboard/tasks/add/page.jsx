@@ -3,6 +3,7 @@ import { addTask } from "@/app/lib/actions";
 import CarSelectionModal from "@/app/ui/dashboard/modalsteps/carSelectionModal";
 import ClientSelectionModal from "@/app/ui/dashboard/modalsteps/clientSelectionModal";
 import InsuranceSelectionModal from "@/app/ui/dashboard/modalsteps/insuranceSelectionModal";
+import NoClientFoundModal from "@/app/ui/dashboard/modalsteps/noClientSelectionModal";
 import styles from "@/app/ui/dashboard/tasks/addTask/addTask.module.css";
 import { useState, useEffect } from "react";
 
@@ -49,9 +50,9 @@ const AddTaskPage = () => {
     if (taskData.clientName) {
       setLoading(true);
       setShowModal(true);
-
+  
       if (typingTimeout) clearTimeout(typingTimeout);
-
+  
       const timeout = setTimeout(async () => {
         try {
           const response = await fetch(`/api/clients?name=${taskData.clientName}`);
@@ -59,9 +60,10 @@ const AddTaskPage = () => {
             const data = await response.json();
             setClients(data);
             setModalStep(1);
+            // Mantém o modal aberto mesmo com lista vazia
+            if (data.length === 0) setShowModal(true); 
           } else {
             setClients([]);
-            setShowModal(false);
           }
         } catch (error) {
           console.error("Erro ao buscar cliente:", error);
@@ -70,7 +72,7 @@ const AddTaskPage = () => {
           setLoading(false);
         }
       }, 1000);
-
+  
       setTypingTimeout(timeout);
     }
   }, [taskData.clientName]);
@@ -280,7 +282,15 @@ const AddTaskPage = () => {
 
       {/* Modal de seleção de cliente, seguro e carro */}
       {showModal && modalStep === 1 && (
-        <ClientSelectionModal clients={clients} onSelectClient={(client) => setSelectedClient(client)} onClose={closeModal} />
+        !loading && clients.length > 0 ? (
+          <ClientSelectionModal
+            clients={clients}
+            onSelectClient={(client) => setSelectedClient(client)}
+            onClose={closeModal}
+          />
+        ) : (
+          !loading && <NoClientFoundModal onClose={closeModal} />
+        )
       )}
       {showModal && modalStep === 2 && selectedClient && (
         <InsuranceSelectionModal insurances={selectedClient.insuranceData} onSelectInsurance={(insurance) => setSelectedInsurance(insurance)} onClose={closeModal} />

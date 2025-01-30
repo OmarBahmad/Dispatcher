@@ -88,21 +88,36 @@
 
 /* Loader para busca de clientes */
 .loader {
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--bgSofter);
+  z-index: 5000;
+  width: 80px;
+  height: 80px;
+  border: 5px solid var(--bgSofter);
   border-top-color: var(--buttonColor);
+  border-bottom-color: var(--buttonColor);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 1.5s ease-in-out infinite;
   position: absolute;
   top: 50%;
-  right: 15px;
+  right: 50%;
   transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  will-change: transform;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+    border-top-color: var(--buttonColor);
+    border-bottom-color: var(--bgSofter);
+  }
+  50% {
+    border-top-color: var(--buttonHover);
+    border-bottom-color: var(--buttonHover);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+    border-top-color: var(--buttonColor);
+    border-bottom-color: var(--bgSofter);
   }
 }
 
@@ -155,4 +170,30 @@
 .modal li:hover {
   background-color: var(--buttonColor);
   color: white;
+}
+
+/* Adicione estas classes */
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.primaryButton {
+  padding: 0.5rem 1rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.secondaryButton {
+  padding: 0.5rem 1rem;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

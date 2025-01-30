@@ -8,7 +8,7 @@ export const fetchUsers = async (q, page) => {
 
   try {
     connectToDB();
-    const count = await User.find({ username: { $regex: regex } }).count();
+    const count = await User.countDocuments({ username: { $regex: regex } });
     const users = await User.find({ username: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
       .skip(ITEMS_PER_PAGE * (page - 1));
@@ -35,7 +35,8 @@ export const fetchTasks = async (q, page) => {
 
   try {
     connectToDB();
-    const count = await Task.find({ title: { $regex: regex } }).count();
+    // Substituir find().count() por countDocuments()
+    const count = await Task.countDocuments({ title: { $regex: regex } });
     const tasks = await Task.find({ title: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
       .skip(ITEMS_PER_PAGE * (page - 1));
@@ -62,7 +63,8 @@ export const fetchClients = async (q, page) => {
 
   try {
     connectToDB();
-    const count = await Client.find({ name: { $regex: regex } }).count();
+    // Substituir find().count() por countDocuments()
+    const count = await Client.countDocuments({ name: { $regex: regex } });
     const clients = await Client.find({ name: { $regex: regex } })
       .limit(ITEMS_PER_PAGE)
       .skip(ITEMS_PER_PAGE * (page - 1));
@@ -77,7 +79,7 @@ export const fetchSingleClient = async (id) => {
   try {
     connectToDB();
     const client = await Client.findById(id);
-    return JSON.stringify(client)
+    return JSON.stringify(client);
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch Client.");
