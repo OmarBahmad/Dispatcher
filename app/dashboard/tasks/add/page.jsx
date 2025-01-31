@@ -116,7 +116,7 @@ const AddTaskPage = () => {
             id="clientname"
             name="clientName"
             placeholder="Client Name"
-            value={selectedClient?.name || taskData.clientName ||  ""}
+            value={taskData.clientName}
             onChange={handleInputChange}
             required
           />
