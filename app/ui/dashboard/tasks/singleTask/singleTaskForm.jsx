@@ -6,26 +6,30 @@ import ClientSelectionModal from "../../modalsteps/clientSelectionModal";
 import InsuranceSelectionModal from "../../modalsteps/insuranceSelectionModal";
 import CarSelectionModal from "../../modalsteps/carSelectionModal";
 
-
 const SingleTaskForm = ({ task }) => {
+  // Ajuste o state inicial para bater com o TaskSchema.
+  // Se no schema for `category: String`, então use `task.category`.
+  // Se quiser armazenar year/model no mesmo Task, precisa ter esses campos no schema também.
   const [taskData, setTaskData] = useState({
     labor: task.labor || 0,
     overtime: task.overtime || 0,
     paidAmount: task.paidAmount || 0,
-    total: task.total || 0,
+    totalAmount: task.totalAmount || 0, // renomeie se no schema for "totalAmount"
     dueAmount: task.dueAmount || 0,
     clientName: task.clientName || "",
-    drivername: task.drivername || "",
-    driverlicence: task.driverlicence || "",
+    driverlicence: task.driverlicence || "", // se ainda existir no schema
     licenseplate: task.licenseplate || "",
     car: task.car || "",
-    category: task.cat || "general",
+    category: task.category || "general", // se no schema for "category"
     status: task.status || "general",
     desc: task.desc || "",
+    // Se seu schema tiver year/model, inclua também (ou remova se não usar):
+    year: task.year || "",
+    model: task.model || "",
   });
 
   const [clients, setClients] = useState([]);
-  const [selectedClient, setSelectedClient] = useState(task.client || null);
+  const [selectedClient, setSelectedClient] = useState(null);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [selectedCar, setSelectedCar] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -40,7 +44,7 @@ const SingleTaskForm = ({ task }) => {
     const dueAmount = total - Number(paidAmount);
     setTaskData((prevData) => ({
       ...prevData,
-      total,
+      totalAmount: total,
       dueAmount,
     }));
   }, [taskData.labor, taskData.overtime, taskData.paidAmount]);
@@ -59,26 +63,34 @@ const SingleTaskForm = ({ task }) => {
 
   return (
     <div className={styles.container}>
+      {/* Form que faz update */}
       <form action={updateTask} className={styles.form}>
-        <input type="hidden" name="id" value={task.id} />
+        {/* Campo hidden com o ID da Task para o update */}
+        <input type="hidden" name="id" value={task._id} />
 
+        {/* CLIENT NAME */}
         <div className={styles.inputContainer}>
-          <label htmlFor="clientname">Client Name</label>
+          <label htmlFor="clientName">Client Name</label>
           <input
             type="text"
-            id="clientname"
+            id="clientName"
             name="clientName"
             placeholder="Client Name"
             value={selectedClient?.name || taskData.clientName}
             onChange={handleInputChange}
-            required
           />
           {loading && <span className={styles.loader}></span>}
         </div>
 
-        <div className={styles.inputContainer + " half-width"}>
+        {/* CATEGORY */}
+        <div className={`${styles.inputContainer} half-width`}>
           <label htmlFor="category">Category</label>
-          <select name="category" id="category" value={taskData.category} onChange={handleInputChange}>
+          <select
+            name="category"
+            id="category"
+            value={taskData.category}
+            onChange={handleInputChange}
+          >
             <option value="">Select Category</option>
             <option value="cancellation">Cancellation</option>
             <option value="renewal">Renewal</option>
@@ -92,6 +104,7 @@ const SingleTaskForm = ({ task }) => {
           </select>
         </div>
 
+        {/* LICENSE PLATE */}
         <div className={styles.inputContainer}>
           <label htmlFor="licenseplate">License Plate</label>
           <input
@@ -104,6 +117,7 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* YEAR (se tiver no schema) */}
         <div className={styles.inputContainer}>
           <label htmlFor="year">Year</label>
           <input
@@ -116,6 +130,7 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* MODEL (se tiver no schema) */}
         <div className={styles.inputContainer}>
           <label htmlFor="model">Model</label>
           <input
@@ -128,6 +143,7 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* PROFIT (labor) */}
         <div className={styles.inputContainer}>
           <label htmlFor="labor">Profit</label>
           <input
@@ -140,6 +156,7 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* OVERTIME (RMV Costs) */}
         <div className={styles.inputContainer}>
           <label htmlFor="overtime">RMV Costs</label>
           <input
@@ -152,17 +169,19 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* TOTAL AMOUNT (calculado automaticamente) */}
         <div className={styles.inputContainer}>
           <label htmlFor="totalAmount">Total Amount</label>
           <input
-            type="text"
+            type="number"
             id="totalAmount"
-            name="total"
+            name="totalAmount"
             disabled
-            value={`US$ ${Number(taskData.total).toFixed(2)}`}
+            value={Number(taskData.totalAmount).toFixed(2)}
           />
         </div>
 
+        {/* PAID AMOUNT */}
         <div className={styles.inputContainer}>
           <label htmlFor="paidAmount">Paid Amount</label>
           <input
@@ -175,20 +194,27 @@ const SingleTaskForm = ({ task }) => {
           />
         </div>
 
+        {/* DUE AMOUNT (calculado automaticamente) */}
         <div className={styles.inputContainer}>
           <label htmlFor="dueAmount">Due Amount</label>
           <input
-            type="text"
+            type="number"
             id="dueAmount"
             name="dueAmount"
             disabled
-            value={`US$ ${Number(taskData.dueAmount).toFixed(2)}`}
+            value={Number(taskData.dueAmount).toFixed(2)}
           />
         </div>
 
+        {/* STATUS */}
         <div className={styles.inputContainer}>
           <label htmlFor="status">Status</label>
-          <select name="status" id="status" value={taskData.status} onChange={handleInputChange}>
+          <select
+            name="status"
+            id="status"
+            value={taskData.status}
+            onChange={handleInputChange}
+          >
             <option value="general">General</option>
             <option value="total">Total Paid</option>
             <option value="partial">Partial Paid</option>
@@ -196,6 +222,7 @@ const SingleTaskForm = ({ task }) => {
           </select>
         </div>
 
+        {/* DESC */}
         <div className={styles.inputContainer}>
           <label htmlFor="desc">Description</label>
           <textarea
@@ -211,15 +238,27 @@ const SingleTaskForm = ({ task }) => {
         <button type="submit">Update</button>
       </form>
 
-      {/* Modal de seleção de cliente, seguro e carro */}
+      {/* Se ainda quiser usar o fluxo de modais para alterar cliente, seguro, carro, etc. */}
       {showModal && modalStep === 1 && (
-        <ClientSelectionModal clients={clients} onSelectClient={(client) => setSelectedClient(client)} onClose={closeModal} />
+        <ClientSelectionModal
+          clients={clients}
+          onSelectClient={(client) => setSelectedClient(client)}
+          onClose={closeModal}
+        />
       )}
       {showModal && modalStep === 2 && selectedClient && (
-        <InsuranceSelectionModal insurances={selectedClient.insuranceData} onSelectInsurance={(insurance) => setSelectedInsurance(insurance)} onClose={closeModal} />
+        <InsuranceSelectionModal
+          insurances={selectedClient.insuranceData}
+          onSelectInsurance={(insurance) => setSelectedInsurance(insurance)}
+          onClose={closeModal}
+        />
       )}
       {showModal && modalStep === 3 && selectedInsurance && selectedClient && (
-        <CarSelectionModal cars={selectedClient.cars} onSelectCar={(car) => setSelectedCar(car)} onClose={closeModal} />
+        <CarSelectionModal
+          cars={selectedClient.cars}
+          onSelectCar={(car) => setSelectedCar(car)}
+          onClose={closeModal}
+        />
       )}
     </div>
   );

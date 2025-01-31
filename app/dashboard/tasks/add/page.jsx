@@ -15,7 +15,6 @@ const AddTaskPage = () => {
     total: 0,
     dueAmount: 0,
     clientName: "",
-    drivername: "",
     driverlicence: "",
     licenseplate: "",
     car: "",
@@ -37,11 +36,12 @@ const AddTaskPage = () => {
   useEffect(() => {
     const { labor, overtime, paidAmount } = taskData;
     const total = Number(labor) + Number(overtime);
-    const dueAmount = total - Number(paidAmount);
+    const due = total - Number(paidAmount);
+  
     setTaskData((prevData) => ({
       ...prevData,
-      total,
-      dueAmount,
+      totalAmount: total,  // rename "total" -> "totalAmount"
+      dueAmount: due
     }));
   }, [taskData.labor, taskData.overtime, taskData.paidAmount]);
 
@@ -200,10 +200,11 @@ const AddTaskPage = () => {
         <div className={styles.inputContainer}>
           <label htmlFor="labor">Profit</label>
           <input
-            type="number"
+            type="text" 
+            pattern="[0-9]*"
             id="labor"
             name="labor"
-            placeholder="Labor"
+            placeholder="Profit"
             value={taskData.labor}
             onChange={handleInputChange}
           />
@@ -212,10 +213,11 @@ const AddTaskPage = () => {
         <div className={styles.inputContainer}>
           <label htmlFor="overtime">RMV Costs</label>
           <input
-            type="number"
+            type="text" 
+            pattern="[0-9]*"
             id="overtime"
             name="overtime"
-            placeholder="Overtime"
+            placeholder="RMV Costs"
             value={taskData.overtime}
             onChange={handleInputChange}
           />
@@ -224,18 +226,19 @@ const AddTaskPage = () => {
         <div className={styles.inputContainer}>
           <label htmlFor="totalAmount">Total Amount</label>
           <input
-            type="text"
+            type="number"
             id="totalAmount"
-            name="total"
+            name="totalAmount"
             disabled
-            value={`US$ ${Number(taskData.total).toFixed(2)}`}
+            value={Number(taskData.totalAmount).toFixed(2)}
           />
         </div>
 
         <div className={styles.inputContainer}>
           <label htmlFor="paidAmount">Paid Amount</label>
           <input
-            type="number"
+            type="text" 
+            pattern="[0-9]*"
             id="paidAmount"
             name="paidAmount"
             placeholder="Paid Amount"
@@ -247,14 +250,13 @@ const AddTaskPage = () => {
         <div className={styles.inputContainer}>
           <label htmlFor="dueAmount">Due Amount</label>
           <input
-            type="text"
+            type="number"
             id="dueAmount"
             name="dueAmount"
             disabled
-            value={`US$ ${Number(taskData.dueAmount).toFixed(2)}`}
+            value={Number(taskData.dueAmount).toFixed(2)}
           />
         </div>
-
         <div className={styles.inputContainer}>
           <label htmlFor="status">Status</label>
           <select name="status" id="status" value={taskData.status} onChange={handleInputChange}>

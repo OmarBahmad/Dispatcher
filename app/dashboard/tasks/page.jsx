@@ -27,7 +27,7 @@ const TasksPage = async ({ searchParams }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Title</td>
+            <td>Driver Name</td>
             <td>Total Amount</td>
             <td>Due Amount</td>
             <td>Paid Status</td>
@@ -39,31 +39,40 @@ const TasksPage = async ({ searchParams }) => {
         </thead>
         <tbody>
           {tasks?.map((task) => (
-            <tr key={task.id} className={styles.tableRow}>
-              <td>{task.title}</td>
+            <tr key={task._id} className={styles.tableRow}>
+              {/* Ajuste o que quer exibir no lugar de "title" */}
+              {/* Por ex: DriverName */}
+              <td>{task.clientName || "-"}</td>
+
+              {/* Se quiser exibir a soma de labor + overtime como "Total Amount" */}
               <td>U$ {Number(task.labor) + Number(task.overtime)}</td>
-              <td>U$ {Number(task.labor) + Number(task.overtime) - Number(task.paidAmount)}</td>
+
+              {/* Due = labor + overtime - paidAmount (se for essa lógica) */}
+              <td>U$ {(Number(task.labor) + Number(task.overtime)) - Number(task.paidAmount)}</td>
+
               <td>
                 <span className={`${styles.status} ${styles[task.status]}`}>
                   {task.status}
                 </span>
               </td>
-              <td className={styles.description}>{task.desc}</td>
+
+              <td className={styles.description}>{task.desc || "-"}</td>
               <td>{new Date(task.createdAt).toLocaleDateString()}</td>
               <td>
-                <span className={`${styles.statusBadge} ${styles.taskcaregory} ${styles[task.cat]}`}>
-                  {task.cat}
+                {/* Se no schema você chama "category" */}
+                <span className={`${styles.statusBadge} ${styles.taskCategory} ${styles[task.category]}`}>
+                  {task.category || "none"}
                 </span>
               </td>
               <td>
                 <div className={styles.actionButtons}>
-                  <Link href={`/dashboard/tasks/${task.id}`}>
+                  <Link href={`/dashboard/tasks/${task._id}`}>
                     <button className={`${styles.button} ${styles.viewButton}`}>
-                      <FiEye /> View
+                      View
                     </button>
                   </Link>
                   <form action={deleteTask}>
-                    <DeleteButtonWithModal id={task.id} text={"task"} />
+                    <DeleteButtonWithModal id={task._id} text="task" />
                   </form>
                 </div>
               </td>

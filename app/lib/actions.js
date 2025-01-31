@@ -76,38 +76,38 @@ export const updateUser = async (formData) => {
 
 export const addTask = async (formData) => {
   const {
-    title,
-    cat,
+    clientName,
     driverlicence,
     licenseplate,
     drivername,
     car,
+    category,
     desc,
     labor,
     overtime,
     totalAmount,
     paidAmount,
     dueAmount,
-    status
+    status,
   } = Object.fromEntries(formData);
 
   try {
     connectToDB();
 
     const newTask = new Task({
-      title,
-      cat,
-      driverlicence,
+      clientName,
+      driverlicence:  driverlicence  ? Number(driverlicence)  : undefined,
       licenseplate,
-      labor,
-      overtime,
-      totalAmount,
-      paidAmount,
-      dueAmount,
-      status,
       drivername,
       car,
-      desc
+      category,
+      desc,
+      labor:          labor          ? Number(labor)          : 0,
+      overtime:       overtime       ? Number(overtime)       : 0,
+      totalAmount:    totalAmount    ? Number(totalAmount)    : 0,
+      paidAmount:     paidAmount     ? Number(paidAmount)     : 0,
+      dueAmount:      dueAmount      ? Number(dueAmount)      : 0,
+      status,
     });
 
     await newTask.save();
@@ -121,30 +121,58 @@ export const addTask = async (formData) => {
 };
 
 export const updateTask = async (formData) => {
-  const { id, title, cat, driverlicence, licenseplate, drivername, car, desc } =
-    Object.fromEntries(formData);
+  const {
+    id,
+    clientName,
+    licenseplate,
+    labor,
+    overtime,
+    totalAmount,
+    paidAmount,
+    dueAmount,
+    category,
+    status,
+    desc,
+    year,
+    model,
+    car,
+    driverlicence, // se ainda quiser manter
+  } = Object.fromEntries(formData);
 
   try {
     connectToDB();
 
     const updateFields = {
-      title,
-      cat,
-      driverlicence,
+      clientName,
       licenseplate,
-      drivername,
-      car,
+      labor:       labor ? Number(labor) : 0,
+      overtime:    overtime ? Number(overtime) : 0,
+      totalAmount: totalAmount ? Number(totalAmount) : 0,
+      paidAmount:  paidAmount ? Number(paidAmount) : 0,
+      dueAmount:   dueAmount ? Number(dueAmount) : 0,
+      category,
+      status,
       desc,
+      year:        year ? Number(year) : undefined, // se for number
+      model,
+      car,
+      driverlicence: driverlicence ? Number(driverlicence) : undefined,
     };
 
-    // Remove campos vazios ou indefinidos
-    Object.keys(updateFields).forEach(
-      (key) =>
-        updateFields[key] === "" || (undefined && delete updateFields[key])
-    );
+    // Remove campos vazios/undefined
+    Object.keys(updateFields).forEach((key) => {
+      if (
+        updateFields[key] === "" ||
+        updateFields[key] === undefined ||
+        (typeof updateFields[key] === "number" && isNaN(updateFields[key]))
+      ) {
+        delete updateFields[key];
+      }
+    });
 
     await Task.findByIdAndUpdate(id, updateFields);
   } catch (err) {
+    console.log("Error updating task:", err);
     throw new Error("Failed to update task!");
   }
 

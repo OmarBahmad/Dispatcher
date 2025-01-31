@@ -31,18 +31,23 @@ export const fetchSingleUser = async (id) => {
 };
 
 export const fetchTasks = async (q, page) => {
-  const regex = new RegExp(q, "i");
+  connectToDB();
+
+  // Se 'q' estiver vazio, query é {}, ou seja, busca tudo
+  // Se 'q' não estiver vazio, busca drivername contendo q (ignora maiúsculo/minúsculo)
+  const query = q
+    ? { clientName: { $regex: new RegExp(q, "i") } }
+    : {};
 
   try {
-    connectToDB();
-    // Substituir find().count() por countDocuments()
-    const count = await Task.countDocuments({ title: { $regex: regex } });
-    const tasks = await Task.find({ title: { $regex: regex } })
+    const count = await Task.countDocuments(query);
+    const tasks = await Task.find(query)
       .limit(ITEMS_PER_PAGE)
       .skip(ITEMS_PER_PAGE * (page - 1));
+
     return { count, tasks };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed to fetch Tasks.");
   }
 };
